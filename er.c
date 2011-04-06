@@ -13,6 +13,7 @@ int main(int argc, const char *argv[])
         a[j++] = i % 2;
         i = i / 2;
     }
+
     if (j == 0) 
     {
         printf("0");
