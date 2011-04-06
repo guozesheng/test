@@ -2,9 +2,8 @@
 
 int main(int argc, const char *argv[])
 {
-    int i;
+    int i, a[32];
     int j = 0;
-    int a[32];
 
     printf("Plese input a numer: ");
     scanf("%d", &i);
@@ -14,9 +13,16 @@ int main(int argc, const char *argv[])
         a[j++] = i % 2;
         i = i / 2;
     }
-    while (j--) 
+    if (j == 0) 
     {
-        printf("%d", a[j]);
+        printf("0");
+    }
+    else 
+    {
+        while (j--) 
+        {
+            printf("%d", a[j]);
+        }
     }
     printf("\n");
     return 0;
