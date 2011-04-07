@@ -3,8 +3,7 @@
 int main(int argc, const char *argv[])
 {
     int num;
-    int i = 28;
-    unsigned int mask = 0x0f;
+    int i = sizeof(int) * 8 - 4;
     char str_h[16] = "0123456789ABCDEF";
 
     printf("Please input a numer:");
@@ -12,9 +11,9 @@ int main(int argc, const char *argv[])
 
     while (i -= 4) 
     {
-        printf("%c", str_h[num>>i&mask]);
+        printf("%c", str_h[num>>i&0x0f]);
     }
-    printf("%c", str_h[num>>i&mask]);
+    printf("%c", str_h[num>>i&0x0f]);
 
     printf("\n");
 
