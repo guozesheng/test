@@ -2,7 +2,8 @@
 
 int main(int argc, const char *argv[])
 {
-    int num, i = 30;
+    int num;
+    int i = sizeof(int) * 8 - 2;
 
     printf("Please input a number:");
     scanf("%d", &num);
