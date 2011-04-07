@@ -23,28 +23,13 @@ void cov(int num)
         cov(num / 16);
     }
     tmp = num % 16;
-    switch(tmp)
+    if (tmp <= 9) 
     {
-        case 10:
-            printf("A");
-            break;
-        case 11:
-            printf("B");
-            break;
-        case 12:
-            printf("C");
-            break;
-        case 13:
-            printf("D");
-            break;
-        case 14:
-            printf("E");
-            break;
-        case 15:
-            printf("F");
-            break;
-        default:
-            printf("%d", tmp);
+        printf("%d", tmp);
+    }
+    else 
+    {
+        printf("%c", 'A' + tmp - 10);
     }
     
 }
