@@ -41,6 +41,16 @@ int main(int argc, const char *argv[])
 
     puts(cStr);
 
+    for (p = str, pc = str; *p != '\0'; p++) 
+    {
+        if (*p != ' ') 
+        {
+            *pc++ = *p;
+        }
+    }
+    *pc = '\0';
+    puts(str);
+
     printf("\n");
     return 0;
 }
