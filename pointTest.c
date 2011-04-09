@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main(int argc, const char *argv[])
 {
@@ -41,6 +42,7 @@ int main(int argc, const char *argv[])
 
     puts(cStr);
 
+/*
     for (p = str, pc = str; *p != '\0'; p++) 
     {
         if (*p != ' ') 
@@ -49,7 +51,20 @@ int main(int argc, const char *argv[])
         }
     }
     *pc = '\0';
-    puts(str);
+//*/
+    for (p = str, pc = str; *pc != '\0'; p++, pc++) 
+    {
+        while (*pc == ' ') 
+        {
+            pc++;
+        }
+        if (p != pc) 
+        {
+            *p = *pc;
+        }
+    }
+    *p = '\0';
+    printf("len=%d: %s\n", strlen(str), str);
 
     printf("\n");
     return 0;
