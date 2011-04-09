@@ -5,6 +5,7 @@ int main(int argc, const char *argv[])
     char str[20] = "This is a C world!";
     char *p = str;
     
+//*
     while (*p != '\0') 
     {
         printf("%c", *p++);
@@ -17,6 +18,14 @@ int main(int argc, const char *argv[])
     {
         printf("%c", *p);
     }
+//*/
+    
+/*
+    for (p += sizeof(str); p >= str; p--) 
+    {
+        putchar(*p);
+    }
+//*/
 
     printf("\n");
     return 0;
