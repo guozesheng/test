@@ -8,6 +8,7 @@ void initArray(int *p, int len, int max);
 void printArray(int *p, int len);
 void bubbleArray(int *p, int len);
 void selectArray(int *p, int len);
+void quickArray(int *p, int i, int j);
 
 int main(int argc, const char *argv[])
 {
@@ -19,12 +20,16 @@ int main(int argc, const char *argv[])
     initArray(a[0], N*N, N*N);
     printArray(a[0], N*N);
 
-    printf("Bubble Sort:\n");
-    bubbleArray(a[0], N*N);
-    printArray(a[0], N*N);
+    //printf("Bubble Sort:\n");
+    //bubbleArray(a[0], N*N);
+    //printArray(a[0], N*N);
 
-    printf("Select Sort:\n");
-    selectArray(a[0], N*N);
+    //printf("Select Sort:\n");
+    //selectArray(a[0], N*N);
+    //printArray(a[0], N*N);
+
+    printf("Quick Sort:\n");
+    quickArray(a[0], 0, N*N-1);
     printArray(a[0], N*N);
 
     return 0;
@@ -80,7 +85,7 @@ void selectArray(int *p, int len)
     int i, j, temp;
     int *pt = p;
 
-    for (i = 0; i < len; i++, pt = p) 
+    for (i = 0; i < len; i++, p++, pt = p) 
     {
         for (j = i; j < len; j++, pt++) 
         {
@@ -94,10 +99,41 @@ void selectArray(int *p, int len)
     }
 }
 
-void quickArray(int *p, int x, int y)
+void quickArray(int *p, int i, int j)
 {
-    int i, j;
+    int temp;
+    int x = i;
+    //j--;
+    int y = j;
     int mid = *(p + y/2);
+
+    while (x <= y) 
+    {
+        while (*(p+x) < mid) 
+        {
+            x++;
+        }
+        while (*(p+y) > mid) 
+        {
+            y--;
+        }
+        if (x <= y) 
+        {
+            temp = *(p+x);
+            *(p+x) = *(p+y);
+            *(p+y) = temp;
+            x++;
+            y--;
+        }
+    }
+    if (x < j) 
+    {
+        quickArray(p+x, x, j);
+    }
+    if (y > i) 
+    {
+        quickArray(p+i, i, y);
+    }
 }
 
 
