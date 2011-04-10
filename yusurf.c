@@ -37,17 +37,11 @@ void printArray(int *p, int len)
 
 void yusurf(int *p, int len, int n)
 {
-    int temp, flag, i;
+    int flag, i;
     int *pt = p;
 
-    for (flag = len, i = 1; flag > 0;temp = n, i++, pt++) 
+    for (flag = len, i = 1; flag > 0; i++) 
     {
-        pt = pt==p+len ? p : pt;
-        while (flag > 0  &&  *pt == 0) 
-        {
-            pt++;
-            pt = pt==p+len ? p : pt;
-        }
         printf("%5d", *pt);
         if (i % n == 0) 
         {
@@ -55,5 +49,10 @@ void yusurf(int *p, int len, int n)
             printf("(out)\n");
             flag--;
         }
+        do 
+        {
+            pt++;
+            pt = pt==p+len ? p : pt;
+        } while (flag > 0  &&  *pt == 0);
     }
 }
