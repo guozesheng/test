@@ -42,21 +42,13 @@ void yusurf(int *p, int len, int n)
 
     for (flag = len, i = 1; flag > 0;temp = n, i++, pt++) 
     {
-        if (pt == p+len) 
-        {
-            pt = p;
-        }
+        pt = pt==p+len ? p : pt;
         while (flag > 0  &&  *pt == 0) 
         {
             pt++;
-            if (pt == p+len) 
-            {
-                pt = p;
-            }
+            pt = pt==p+len ? p : pt;
         }
         printf("%5d", *pt);
-        //printf("flag:%d, i:%d, n:%d, i%%n:%d\n", flag, i, n, i%n);
-        //getchar();
         if (i % n == 0) 
         {
             *pt = 0;
