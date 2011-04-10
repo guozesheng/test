@@ -15,8 +15,6 @@ int main(int argc, const char *argv[])
     int a[N][N] = {{2, 4, 6}};
     a[1][0] = 3;
 
-    //printf("%d, %d, %d\n", a[0][0], a[0][1], a[0][2]);
-
     initArray(a[0], N*N, N*N);
     printArray(a[0], N*N);
 
@@ -103,9 +101,8 @@ void quickArray(int *p, int i, int j)
 {
     int temp;
     int x = i;
-    //j--;
     int y = j;
-    int mid = *(p + y/2);
+    int mid = *(p + (y+x)/2);
 
     while (x <= y) 
     {
@@ -126,13 +123,13 @@ void quickArray(int *p, int i, int j)
             y--;
         }
     }
-    if (x < j) 
-    {
-        quickArray(p+x, x, j);
-    }
     if (y > i) 
     {
-        quickArray(p+i, i, y);
+        quickArray(p, i, y);
+    }
+    if (x < j) 
+    {
+        quickArray(p, x, j);
     }
 }
 
