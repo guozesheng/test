@@ -10,11 +10,14 @@ typedef struct node
 
 NODE *createLink(int n);
 void printList(NODE *p);
+NODE *insertList(NODE *head);
 
 int main(int argc, const char *argv[])
 {
     NODE *head;
     head = createLink(10);
+    printList(head);
+    head = insertList(head);
     printList(head);
     
     return 0;
@@ -40,7 +43,7 @@ NODE *createLink(int n)
         {
             return NULL;
         }
-        p -> next -> num = i + 1;
+        p -> next -> num = i * 2;
         p -> next -> level = 'A';
         p -> next -> next = NULL;
         p = p -> next;
@@ -56,4 +59,41 @@ void printList(NODE *p)
         printf("num: %d\tlevel: %c\n", p->num, p->level);
         p = p->next;
     } while (p);
+}
+
+NODE *insertList(NODE *head)
+{
+    NODE *p;
+    NODE *ptr = head;
+
+    if ((p = malloc(sizeof(NODE))) == NULL)
+    {
+        return NULL;
+    }
+    printf("Input the number:");
+    scanf("%d", &p->num);
+    printf("Input the level:");
+    getchar();
+    scanf("%c", &p->level);
+    p->next = NULL;
+
+    if (head == NULL) 
+    {
+        return p;
+    }
+    if (p->num < ptr->num) 
+    {
+        p->next = ptr;
+        head = p;
+        return head;
+    }
+
+    while ((ptr->next != NULL) && (ptr->next->num < p->num)) 
+    {
+        ptr = ptr->next;
+    }
+    p->next = ptr->next;
+    ptr->next = p;
+
+    return head;
 }
