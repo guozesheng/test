@@ -11,6 +11,7 @@ typedef struct node
 NODE *createLink(int n);
 void printList(NODE *p);
 NODE *insertList(NODE *head);
+NODE *delLink(NODE *head);
 
 int main(int argc, const char *argv[])
 {
@@ -23,6 +24,8 @@ int main(int argc, const char *argv[])
         printf("%d:", i);
         head = insertList(head);
     }
+    printList(head);
+    head = delLink(head);
     printList(head);
     
     return 0;
@@ -115,25 +118,30 @@ NODE *delLink(NODE *head)
         return NULL;
     }
     printf("Input the number to delete:\n");
-    scnaf("%d", &num);
+    scanf("%d", &num);
 
     if (num == head->num) 
     {
         ptr = head;
         head = head->next;
         free(ptr);
-        return head;
     }
-
-    while ((p->next != NULL) && (p->next->num != num)) 
+    else 
     {
-        p = p->next;
-    }
-    if (num == p->next-num) 
-    {
-        ptr = p->next;
-        p->next = p->next->next;
-        free(ptr);
+        while ((p->next != NULL) && (p->next->num != num)) 
+        {
+            p = p->next;
+        }
+        if (num == p->next->num) 
+        {
+            ptr = p->next;
+            p->next = p->next->next;
+            free(ptr);
+        }
+        else 
+        {
+            printf("No match!\n");
+        }
     }
 
     return head;
