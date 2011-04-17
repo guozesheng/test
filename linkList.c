@@ -12,6 +12,7 @@ int main(int argc, const char *argv[])
 {
     NODE stu;
     NODE *ptr;
+    ptr = &stu;
 
     printf("Input the number:");
     scanf("%d", &ptr->num);
