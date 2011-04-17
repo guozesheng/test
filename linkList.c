@@ -12,23 +12,54 @@ NODE *createLink(int n);
 void printList(NODE *p);
 NODE *insertList(NODE *head);
 NODE *delLink(NODE *head);
+void printMenu(void);
+int getChoice(void);
 
 int main(int argc, const char *argv[])
 {
     NODE *head = NULL;
-    int i = 5;
-    //head = createLink(10);
-    //printList(head);
-    while (i--) 
+    int i = 1;
+    while (i) 
     {
-        printf("%d:", i);
-        head = insertList(head);
+        printMenu();
+        switch(getChoice())
+        {
+            case 1:
+                head = insertList(head);
+                break;
+            case 2:
+                head = delLink(head);
+                break;
+            case 3:
+                printList(head);
+                break;
+            case 0:
+                //exit(0);
+                i = 0;
+                break;
+            default:
+                printf("wrong!\n");
+                break;
+        }
+        
     }
-    printList(head);
-    head = delLink(head);
-    printList(head);
     
     return 0;
+}
+
+int getChoice(void)
+{
+    int choice;
+    scanf("%d", &choice);
+    return choice;
+}
+
+void printMenu(void)
+{
+    printf("\t1.Insert list.\n");
+    printf("\t2.Delete list.\n");
+    printf("\t3.Print  list.\n");
+    printf("\t0.Exit.\n");
 }
 
 NODE *createLink(int n)
@@ -62,6 +93,11 @@ NODE *createLink(int n)
 
 void printList(NODE *p)
 {
+    if (p == NULL) 
+    {
+        printf("This list is NULL!\n");
+        return;
+    }
     do 
     {
         printf("num: %d\tlevel: %c\n", p->num, p->level);
