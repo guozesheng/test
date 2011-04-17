@@ -5,7 +5,7 @@ typedef struct node
 {
     int num;
     char name[20];
-    int score;
+    char level;
 }NODE;
 
 int main(int argc, const char *argv[])
@@ -18,9 +18,10 @@ int main(int argc, const char *argv[])
     scanf("%d", &ptr->num);
     printf("Input the name:");
     scanf("%s", ptr->name);
-    printf("Input the score:");
-    scanf("%d", &ptr->score);
-    printf("number: %d, name: %s, score: %d\n", ptr->num, ptr->name, ptr->score);
+    getchar();
+    printf("Input the level:");
+    scanf("%c", &ptr->level);
+    printf("number: %d, name: %s, level: %c\n", ptr->num, ptr->name, ptr->level);
     
     return 0;
 }
