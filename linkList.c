@@ -14,10 +14,15 @@ NODE *insertList(NODE *head);
 
 int main(int argc, const char *argv[])
 {
-    NODE *head;
-    head = createLink(10);
-    printList(head);
-    head = insertList(head);
+    NODE *head = NULL;
+    int i = 5;
+    //head = createLink(10);
+    //printList(head);
+    while (i--) 
+    {
+        printf("%d:", i);
+        head = insertList(head);
+    }
     printList(head);
     
     return 0;
