@@ -13,10 +13,13 @@ int main(int argc, const char *argv[])
     NODE stu;
     NODE *ptr;
 
-    ptr = &stu;
-    ptr->num = 15;
-    strcpy(ptr->name, "XiaoGuoguo");
-    printf("number: %d, name: %s\n", ptr->num, ptr->name);
+    printf("Input the number:");
+    scanf("%d", &ptr->num);
+    printf("Input the name:");
+    scanf("%s", ptr->name);
+    printf("Input the score:");
+    scanf("%d", &ptr->score);
+    printf("number: %d, name: %s, score: %d\n", ptr->num, ptr->name, ptr->score);
     
     return 0;
 }
