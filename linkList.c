@@ -102,3 +102,39 @@ NODE *insertList(NODE *head)
 
     return head;
 }
+
+NODE *delLink(NODE *head)
+{
+    int num;
+    NODE *p = head;
+    NODE *ptr;
+
+    if (head == NULL) 
+    {
+        printf("Empty link!\n");
+        return NULL;
+    }
+    printf("Input the number to delete:\n");
+    scnaf("%d", &num);
+
+    if (num == head->num) 
+    {
+        ptr = head;
+        head = head->next;
+        free(ptr);
+        return head;
+    }
+
+    while ((p->next != NULL) && (p->next->num != num)) 
+    {
+        p = p->next;
+    }
+    if (num == p->next-num) 
+    {
+        ptr = p->next;
+        p->next = p->next->next;
+        free(ptr);
+    }
+
+    return head;
+}
