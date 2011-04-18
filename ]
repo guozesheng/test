@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+    int num;
+    struct node *next;
+}NODE;
+
+NODE *initList(int len);
+void printList(NODE *p);
+
+int main(int argc, const char *argv[])
+{
+    NODE *head;
+    head = initList(2);
+    printList(head);
+    
+    return 0;
+}
+
+void printList(NODE *p)
+{
+    NODE *ptr = p;
+    if (p == NULL) 
+    {
+        return;
+    }
+    while (ptr->next != p) 
+    {
+        printf("%3d", ptr->next->num);
+        ptr = ptr->next;
+    }
+    printf("%3d\n", p->num);
+}
+
+NODE *initList(int len)
+{
+    int i = 1;
+    NODE *head, *p, *ptr;
+
+    if ((head = malloc(sizeof(NODE))) == NULL)
+    {
+        return NULL;
+    }
+    head->num = i;
+    head->next = head;
+    ptr = head;
+
+    for (i++; i <= len; i++) 
+    {
+        if ((p = malloc(sizeof(NODE))) == NULL)
+        {
+            return NULL;
+        }
+        p->num = i;
+        p->next = head;
+        ptr->next = p;
+    }
+
+    return p;
+}
