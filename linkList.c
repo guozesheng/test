@@ -51,6 +51,20 @@ int main(int argc, const char *argv[])
     return 0;
 }
 
+NODE *loadLink(void)
+{
+    NODE *head = NULL;
+    FILE *fp;
+    
+    if ((fp = fopen("a.text", "r+")) == NULL) 
+    {
+        perror("fp");
+        exit(0);
+    }
+
+    return head;
+}
+
 void saveLink(NODE *p)
 {
     FILE *fp;
