@@ -15,6 +15,7 @@ NODE *delLink(NODE *head);
 void printMenu(void);
 int getChoice(void);
 void saveLink(NODE *p);
+NODE *loadLink(NODE *head);
 
 int main(int argc, const char *argv[])
 {
@@ -37,6 +38,9 @@ int main(int argc, const char *argv[])
             case 4:
                 saveLink(head);
                 break;
+            case 5:
+                loadLink(head);
+                break;
             case 0:
                 //exit(0);
                 i = 0;
@@ -51,15 +55,46 @@ int main(int argc, const char *argv[])
     return 0;
 }
 
-NODE *loadLink(void)
+NODE *loadLink(NODE *head)
 {
-    NODE *head = NULL;
     FILE *fp;
+    NODE *p, *ptr;
+    int numTemp;
+    char levelTemp;
+
+    if (head != NULL) 
+    {
+        return head;
+    }
     
     if ((fp = fopen("a.text", "r+")) == NULL) 
     {
         perror("fp");
-        exit(0);
+        return head;
+    }
+    if (fscanf(fp, "%d, %c", &numTemp, &levelTemp) != EOF) 
+    {
+        if ((p = malloc(sizeof(NODE))) == NULL) 
+        {
+            return head;
+        }
+        p->num = numTemp;
+        p->level = levelTemp;
+        p->next = NULL;
+        head = ptr = p;
+    }
+    while (fscanf(fp, "%d, %c", &numTemp, &levelTemp) != EOF) 
+    {
+        if ((p = malloc(sizeof(NODE))) == NULL) 
+        {
+            return head;
+        }
+        p->num = numTemp;
+        p->level = levelTemp;
+        p->next = NULL;
+        ptr->next = p;
+        ptr = ptr->next;
+        printf("1\n");
     }
 
     return head;
@@ -95,7 +130,8 @@ void printMenu(void)
     printf("\t1.Insert list.\n");
     printf("\t2.Delete list.\n");
     printf("\t3.Print  list.\n");
-    printf("\t4.Save   list\n");
+    printf("\t4.Save   list.\n");
+    printf("\t5.Load   list.\n");
     printf("\t0.Exit.\n");
 }
 
