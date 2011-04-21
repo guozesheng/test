@@ -14,6 +14,7 @@ NODE *insertList(NODE *head);
 NODE *delLink(NODE *head);
 void printMenu(void);
 int getChoice(void);
+void saveLink(NODE *p);
 
 int main(int argc, const char *argv[])
 {
@@ -33,6 +34,9 @@ int main(int argc, const char *argv[])
             case 3:
                 printList(head);
                 break;
+            case 4:
+                saveLink(head);
+                break;
             case 0:
                 //exit(0);
                 i = 0;
@@ -45,6 +49,23 @@ int main(int argc, const char *argv[])
     }
     
     return 0;
+}
+
+void saveLink(NODE *p)
+{
+    FILE *fp;
+
+    if ((fp = fopen("a.text", "w+")) == NULL) 
+    {
+        perror("fp");
+        exit(0);
+    }
+    while (p != NULL) 
+    {
+        fprintf(fp, "%d\t%c\n", p->num, p->level);
+        p = p->next;
+    }
+    fclose(fp);
 }
 
 int getChoice(void)
@@ -60,6 +81,7 @@ void printMenu(void)
     printf("\t1.Insert list.\n");
     printf("\t2.Delete list.\n");
     printf("\t3.Print  list.\n");
+    printf("\t4.Save   list\n");
     printf("\t0.Exit.\n");
 }
 
