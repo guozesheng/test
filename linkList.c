@@ -56,6 +56,7 @@ int getChoice(void)
 
 void printMenu(void)
 {
+    system("clear");
     printf("\t1.Insert list.\n");
     printf("\t2.Delete list.\n");
     printf("\t3.Print  list.\n");
@@ -103,6 +104,9 @@ void printList(NODE *p)
         printf("num: %d\tlevel: %c\n", p->num, p->level);
         p = p->next;
     } while (p);
+    printf("press any key to continu...\n");
+    getchar();
+    getchar();
 }
 
 NODE *insertList(NODE *head)
