@@ -39,7 +39,7 @@ int main(int argc, const char *argv[])
                 saveLink(head);
                 break;
             case 5:
-                loadLink(head);
+                head = loadLink(head);
                 break;
             case 0:
                 //exit(0);
@@ -61,6 +61,7 @@ NODE *loadLink(NODE *head)
     NODE *p, *ptr;
     int numTemp;
     char levelTemp;
+    int i = 0; //for test
 
     if (head != NULL) 
     {
@@ -72,7 +73,7 @@ NODE *loadLink(NODE *head)
         perror("fp");
         return head;
     }
-    if (fscanf(fp, "%d, %c", &numTemp, &levelTemp) != EOF) 
+    if (fscanf(fp, "%d\t%c", &numTemp, &levelTemp) != EOF) 
     {
         if ((p = malloc(sizeof(NODE))) == NULL) 
         {
@@ -83,7 +84,7 @@ NODE *loadLink(NODE *head)
         p->next = NULL;
         head = ptr = p;
     }
-    while (fscanf(fp, "%d, %c", &numTemp, &levelTemp) != EOF) 
+    while (fscanf(fp, "%d\t%c", &numTemp, &levelTemp) != EOF) 
     {
         if ((p = malloc(sizeof(NODE))) == NULL) 
         {
@@ -94,7 +95,14 @@ NODE *loadLink(NODE *head)
         p->next = NULL;
         ptr->next = p;
         ptr = ptr->next;
-        printf("1\n");
+
+        if (i++ == 100)  //for test
+        {
+            printf("i == 100\n");
+            getchar();
+            getchar();
+            break;
+        }
     }
 
     return head;
