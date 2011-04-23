@@ -25,12 +25,14 @@ int main(int argc, const char *argv[])
         //usleep(10000);
         //restore(i, 600);
     //}
-    save_bg(500, 600);
-    draw_cursor(500, 600);
+    //save_bg(500, 600);
+    //draw_cursor(500, 600);
 
-    sleep(2);
-    restore(500, 600);
-    draw_cursor(530, 600);
+    //sleep(2);
+    //restore(500, 600);
+    //draw_cursor(530, 600);
+
+    mouse_doing();
 
     return 0;
 }
