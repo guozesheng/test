@@ -38,16 +38,35 @@ int init_screen(void)
         perror("map");
         exit(0);
     }
-    int i = 0;
-    int j = 0;
+    //int i = 0;
+    //int j = 0;
+    //int flag = 0;
 
-    for (j = 0; j < 100; j++) 
-    {
-        for (i = 0; i < 100; i++) 
-        {
-            p[j*fb_v.w+i] = 0x00000000ff;
-        }
-    }
+    //for (j = 0; j < 768; j += 5) 
+    //{
+        //for (i = 0; i < 1024; i += 5) 
+        //{
+            //if (flag == 0) 
+            //{
+                //p[j*fb_v.w+i] = 0x00000000ff;
+                //flag = 1;
+            //}
+            //else 
+            //{
+                //p[j*fb_v.w+i] = 0x00ff00ff00;
+                //flag = 0;
+            //}
+        //}
+    //}
+
+    fb_v.memo = p;
+
+    return 0;
+}
+
+int fb_one_pixel(int x, int y, u32_t color)
+{
+    *((u32_t *)fb_v.memo + x + y *fb_v.w) = color;
 
     return 0;
 }

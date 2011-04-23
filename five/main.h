@@ -14,5 +14,6 @@ typedef struct
 } fbsrc_t;
 
 int init_screen(void);
+int fb_one_pixel(int x, int y, u32_t color);
     
 #endif
