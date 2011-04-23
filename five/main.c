@@ -13,7 +13,7 @@ int main(int argc, const char *argv[])
     //fb_circle(600, 150, 100, 0x00aa00cc);
     //fb_circle_s(500, 600, 150, 0x000ff000);
 
-    print_board(0x0000ff00);
+    print_board(0x00ffffff);
 
     return 0;
 }

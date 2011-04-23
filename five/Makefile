@@ -1,6 +1,6 @@
 # This is for chess game
 
-src=main.c init_op.c basic_shapes.c
+src=main.c init_op.c basic_shapes.c print_board.c
 para=-o main -Wall
 
 main:$(src)
