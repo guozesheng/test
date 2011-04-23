@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "main.h"
 
 int main(int argc, const char *argv[])
@@ -14,7 +15,13 @@ int main(int argc, const char *argv[])
     fb_circle_s(500, 600, 150, 0x000ff000);
 
     //print_board(0x00ffffff);
+
+    save_bg(500, 600);
     draw_cursor(500, 600);
+
+    sleep(2);
+    restore(500, 600);
+    draw_cursor(530, 600);
 
     return 0;
 }

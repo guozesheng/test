@@ -32,5 +32,7 @@ int fb_circle(int x0, int y0, int r, u32_t color);
 int fb_circle_s(int x0, int y0, int r, u32_t color);
 int print_board(u32_t color);
 int draw_cursor(int x, int y);
+int save_bg(int x, int y);
+int restore(int x, int y);
     
 #endif
