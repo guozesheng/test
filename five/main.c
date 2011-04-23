@@ -16,6 +16,15 @@ int main(int argc, const char *argv[])
 
     //print_board(0x00ffffff);
 
+    //int i;
+    //for (i = 0; i < 1000; i++) 
+    //{
+        //save_bg(i, 600);
+        //draw_cursor(i, 600);
+
+        //usleep(10000);
+        //restore(i, 600);
+    //}
     save_bg(500, 600);
     draw_cursor(500, 600);
 
