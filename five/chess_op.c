@@ -88,7 +88,7 @@ int chess_do(void)
         return 0;
     }
 
-    if (x < ST_X || (x > ST_X + SPACE * (B_X -1))) 
+    if (x < ST_X || (x > ST_X + SPACE * (B_X -1)))      // change the player and color
     {
         if ((x > 42) && (x < 78) && (y > 82) && (y < 118)) 
         {

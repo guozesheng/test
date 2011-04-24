@@ -103,6 +103,7 @@ int mouse_doing(void)
 {
     int fd;
     int press_flag = 0;
+    int end_flag = 0;
     mouse_event m_event;
     fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK); //?
     if (fd == -1) 
@@ -111,7 +112,7 @@ int mouse_doing(void)
         exit(0);
     }
 
-    mx = fb_v.w / 2;
+    mx = fb_v.w / 2;    //initial the coordinates.
     my = fb_v.h / 2;
 
     draw_cursor(mx, my);
@@ -141,7 +142,15 @@ int mouse_doing(void)
                     if (press_flag == 1) 
                     {
                         press_flag = 0;
-                        chess_do();
+                        if (end_flag == 0) 
+                        {
+                            end_flag = chess_do();
+                        }
+                        else 
+                        {
+                            print_board(GRAY, YELLOW);
+                            end_flag = 0;
+                        }
                     }
                     else if (press_flag == 2) 
                     {
