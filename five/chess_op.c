@@ -6,11 +6,14 @@ extern int my;
 char flag = 0;
 char chess_board[B_X*B_Y];
 u32_t current_color = BLACK;
+char current_player = 0;
 
 int chess_do(void)
 {
     int x = mx;
     int y = my;
+    int lx = 0;
+    int ly = 0;
 
     if (flag == 0) 
     {
@@ -24,10 +27,12 @@ int chess_do(void)
         if ((x > 42) && (x < 78) && (y > 82) && (y < 118)) 
         {
             current_color = BLACK;
+            current_player = 1;
         }
         else if ((x > 42) && (x < 78) && (y > 182) && (y < 218)) 
         {
             current_color = WHITE;
+            current_player = 2;
         }
         return 0;
     }
@@ -55,6 +60,9 @@ int chess_do(void)
     {
         y = my + (SPACE - y);
     }
+
+    lx = (x - ST_X) / SPACE;
+    ly = (y - ST_Y) / SPACE;
 
     fb_circle(x, y, 13, current_color);
 

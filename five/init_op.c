@@ -4,10 +4,14 @@
 #include <linux/fb.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
+#include <string.h>
+#include <unistd.h>
 #include "main.h"
 
 fbsrc_t fb_v;
 extern char chess_board[B_X*B_Y];
+extern char current_player;
+extern u32_t current_color;
 
 int init_screen(void)
 {
@@ -63,6 +67,8 @@ int init_screen(void)
     fb_v.memo = p;
 
     memset(chess_board, 0, B_Y * B_X);
+    current_player = 1;
+    current_color = BLACK;
 
     close(fd);
     return 0;
