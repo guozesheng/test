@@ -4,8 +4,10 @@
 extern int mx;
 extern int my;
 char flag = 0;
+char chess_board[B_X*B_Y];
+u32_t current_color = BLACK;
 
-int chess_do(u32_t color)
+int chess_do(void)
 {
     int x = mx;
     int y = my;
@@ -19,6 +21,14 @@ int chess_do(u32_t color)
 
     if (x < ST_X || (x > ST_X + SPACE * (B_X -1))) 
     {
+        if ((x > 42) && (x < 78) && (y > 82) && (y < 118)) 
+        {
+            current_color = BLACK;
+        }
+        else if ((x > 42) && (x < 78) && (y > 182) && (y < 218)) 
+        {
+            current_color = WHITE;
+        }
         return 0;
     }
     if (y < ST_Y || (y > ST_Y + SPACE * (B_Y -1))) 
@@ -46,7 +56,7 @@ int chess_do(u32_t color)
         y = my + (SPACE - y);
     }
 
-    fb_circle(x, y, 13, color);
+    fb_circle(x, y, 13, current_color);
 
     return 0;
 }

@@ -141,18 +141,18 @@ int mouse_doing(void)
                     if (press_flag == 1) 
                     {
                         press_flag = 0;
-                        chess_do(0x000000ff);
+                        chess_do();
                     }
                     else if (press_flag == 2) 
                     {
                         press_flag = 0;
-                        chess_do(0x0000ff00);
+                        chess_do();
                     }
                     break;
                 case 1: press_flag = 1; break;
                 case 2: press_flag = 2; break;
                 case 3:  break;
-                case 4: chess_do(0x00000000); break;
+                case 4:  break;
                 default: break;
             }
 

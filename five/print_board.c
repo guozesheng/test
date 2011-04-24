@@ -27,5 +27,8 @@ int print_board(u32_t color_l, u32_t color_b)
         fb_line(ST_X+i*SPACE, ST_Y, ST_X+i*SPACE, ST_Y+(B_Y-1)*SPACE, color_l);
     }
     
+    fb_circle(60, 100, 18, BLACK);
+    fb_circle(60, 200, 18, WHITE);
+
     return 0;
 }

@@ -50,6 +50,6 @@ int draw_cursor(int x, int y);
 int save_bg(int x, int y);
 int restore(int x, int y);
 int mouse_doing(void);
-int chess_do(u32_t color);
+int chess_do(void);
     
 #endif

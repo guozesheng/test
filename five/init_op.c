@@ -7,6 +7,7 @@
 #include "main.h"
 
 fbsrc_t fb_v;
+extern char chess_board[B_X*B_Y];
 
 int init_screen(void)
 {
@@ -61,6 +62,9 @@ int init_screen(void)
 
     fb_v.memo = p;
 
+    memset(chess_board, 0, B_Y * B_X);
+
+    close(fd);
     return 0;
 }
 
