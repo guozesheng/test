@@ -4,7 +4,7 @@
 extern int mx;
 extern int my;
 
-int chess_do(void)
+int chess_do(u32_t color)
 {
     int x = mx;
     int y = my;
@@ -38,7 +38,7 @@ int chess_do(void)
         y = my + (SPACE - y);
     }
 
-    fb_circle(x, y, 13, 0x0000ff00);
+    fb_circle(x, y, 13, color);
 
     return 0;
 }

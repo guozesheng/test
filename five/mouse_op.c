@@ -136,10 +136,10 @@ int mouse_doing(void)
 
             switch (m_event.button)
             {
-                case 1: chess_do(); break;
-                case 2: fb_circle(mx, my, 13, 0x0000ff00);  break;
+                case 1: chess_do(0x000000ff); break;
+                case 2: chess_do(0x0000ff00); break;
                 case 3:  break;
-                case 4: fb_circle(mx, my, 13, 0x00000000);  break;
+                case 4: chess_do(0x00000000); break;
                 default: break;
             }
 
