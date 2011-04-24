@@ -103,7 +103,7 @@ int mouse_doing(void)
     int fd;
     int mx, my;
     mouse_event m_event;
-    fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK);
+    fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK); //?
     if (fd == -1) 
     {
         perror("mice");
@@ -125,9 +125,10 @@ int mouse_doing(void)
 
             switch (m_event.button)
             {
-                case 1: fb_circle(mx, my, 13, 0x000000ff);break;
-                case 2: break;
-                case 3: break;
+                case 1: fb_circle(mx, my, 13, 0x000000ff); break;
+                case 2: fb_circle(mx, my, 13, 0x0000ff00);  break;
+                case 3:  break;
+                case 4: fb_circle(mx, my, 13, 0x00000000);  break;
                 default: break;
             }
 
