@@ -8,12 +8,78 @@ char chess_board[B_X*B_Y];
 u32_t current_color = BLACK;
 char current_player = 0;
 
+int chess_one(int x, int y)
+{
+    int i = 0;
+    int j = 0;
+    int counter = 0;
+    int who = 0;
+    int m[4] = {1, 0, 1, 1};
+    int n[4] = {0, 1, 1, -1};
+    int sx = x;
+    int sy = y;
+
+    who = chess_board[x+y*B_X];
+
+    if (who == 0) 
+    {
+        return 0;
+    }
+
+    for (j = 0; j < 4; j++) 
+    {
+        for (i = 1, counter = 1, x = sx, y = sy; i < 5; i++) 
+        {
+            x += m[j];
+            y += n[j];
+            if (chess_board[x+y*B_X] == who) 
+            {
+                counter++;
+            }
+            else 
+            {
+                break;
+            }
+        }
+        if (counter == 5) 
+        {
+            return who;
+        }
+    }
+
+
+    return 0;
+}
+
+int check_win(void)
+{
+    int i = 0;
+    int j = 0;
+    int winner;
+
+    for (j = 0; j < B_Y; j++) 
+    {
+        for (i = 0; i < B_X; i++) 
+        {
+            winner = chess_one(i, j);
+            if (winner > 0) 
+            {
+                return winner;
+            }
+        }
+    }
+    return 0;
+}
+
 int chess_do(void)
 {
     int x = mx;
     int y = my;
+
     int lx = 0;
     int ly = 0;
+
+    int winner = 0;
 
     if (flag == 0) 
     {
@@ -64,7 +130,15 @@ int chess_do(void)
     lx = (x - ST_X) / SPACE;
     ly = (y - ST_Y) / SPACE;
 
+    chess_board[lx + ly * B_X] = current_player;
     fb_circle(x, y, 13, current_color);
+
+    winner = check_win();
+    if (winner > 0) 
+    {
+        printf("player %d is won!\n", winner);
+        return winner;
+    }
 
     return 0;
 }
