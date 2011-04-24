@@ -102,6 +102,7 @@ int get_m_info(int fd, mouse_event *p)
 int mouse_doing(void)
 {
     int fd;
+    int press_flag = 0;
     mouse_event m_event;
     fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK); //?
     if (fd == -1) 
@@ -136,8 +137,20 @@ int mouse_doing(void)
 
             switch (m_event.button)
             {
-                case 1: chess_do(0x000000ff); break;
-                case 2: chess_do(0x0000ff00); break;
+                case 0: 
+                    if (press_flag == 1) 
+                    {
+                        press_flag = 0;
+                        chess_do(0x000000ff);
+                    }
+                    else if (press_flag == 2) 
+                    {
+                        press_flag = 0;
+                        chess_do(0x0000ff00);
+                    }
+                    break;
+                case 1: press_flag = 1; break;
+                case 2: press_flag = 2; break;
                 case 3:  break;
                 case 4: chess_do(0x00000000); break;
                 default: break;

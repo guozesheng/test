@@ -1,13 +1,19 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+#define YELLOW  0x00eebb00
+#define BLACK   0x00
+#define WHITE   0x00ffffff
+/*#define GRAY    0x00444444*/
+#define GRAY    0x00222222
+
 #define ST_X    100
 #define ST_Y    40
 #define B_X     29
 #define B_Y     24
 #define SPACE   30
 
-#define T___    0x00
+#define T___    YELLOW
 #define BORD    0x0f
 #define X___    0x00fffff
 #define C_W     10
@@ -39,7 +45,7 @@ int fb_one_pixel(int x, int y, u32_t color);
 int fb_line(int x1, int y1, int x2, int y2, u32_t color);
 int fb_circle(int x0, int y0, int r, u32_t color);
 int fb_circle_s(int x0, int y0, int r, u32_t color);
-int print_board(u32_t color);
+int print_board(u32_t color_l, u32_t color_b);
 int draw_cursor(int x, int y);
 int save_bg(int x, int y);
 int restore(int x, int y);
