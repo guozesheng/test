@@ -101,6 +101,7 @@ int get_m_info(int fd, mouse_event *p)
 int mouse_doing(void)
 {
     int fd;
+    int mx, my;
     mouse_event m_event;
     fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK);
     if (fd == -1) 

@@ -75,7 +75,7 @@ int fb_line(int x1, int y1, int x2, int y2, u32_t color)
     return 0;
 }
 
-int fb_circle(int x0, int y0, int r, u32_t color)
+int fb_circle_s(int x0, int y0, int r, u32_t color)
 {
     int x = 0;
     int y = r;
@@ -112,7 +112,7 @@ int fb_circle(int x0, int y0, int r, u32_t color)
     return 0;
 }
 
-int fb_circle_s(int x0, int y0, int r, u32_t color)
+int fb_circle(int x0, int y0, int r, u32_t color)
 {
     int x = 0;
     int y = r;
