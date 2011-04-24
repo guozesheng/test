@@ -16,7 +16,7 @@ extern u32_t current_color;
 int init_screen(void)
 {
     int fd;
-    struct fb_var_screeninfo fb_var;
+    struct fb_var_screeninfo fb_var;    //system
     u32_t *p = NULL;
 
     fd = open("/dev/fb0", O_RDWR);

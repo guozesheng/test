@@ -136,7 +136,7 @@ int chess_do(void)
     winner = check_win();
     if (winner > 0) 
     {
-        printf("player %d is won!\n", winner);
+        write_world(50, 300, winner);
         return winner;
     }
 

@@ -1,6 +1,5 @@
-# This is for chess game
-
-src=main.c init_op.c basic_shapes.c print_board.c mouse_op.c chess_op.c world.c
+# This is only for Test
+src=main.c init.c
 para=-o main -Wall
 
 main:$(src)

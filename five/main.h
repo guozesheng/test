@@ -4,6 +4,7 @@
 #define YELLOW  0x00eebb00
 #define BLACK   0x00
 #define WHITE   0x00ffffff
+#define READ    0x0000ff0000
 /*#define GRAY    0x00444444*/
 #define GRAY    0x00222222
 
@@ -51,5 +52,6 @@ int save_bg(int x, int y);
 int restore(int x, int y);
 int mouse_doing(void);
 int chess_do(void);
+int write_world(int x, int y, int num);
     
 #endif
