@@ -5,7 +5,6 @@
 #define BLACK   0x00
 #define WHITE   0x00ffffff
 #define READ    0x0000ff0000
-/*#define GRAY    0x00444444*/
 #define GRAY    0x00222222
 
 #define ST_X    100
