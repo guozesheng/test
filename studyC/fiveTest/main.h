@@ -24,6 +24,15 @@ typedef struct
     void *memo;
 } fbsrc_t;
 
+typedef struct
+{
+    int dx;
+    int dy;
+    int dz;
+
+    char button;
+} mouse_event;
+
 int init_screen(void);
 int fb_pixel(int x, int y, u32_t color);
 int fb_line(int x1, int y1, int x2, int y2, u32_t color);

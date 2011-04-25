@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "main.h"
 
 extern fbsrc_t fb_v;    //extern form init.c
@@ -46,9 +47,27 @@ int draw_cursor(int x, int y)
     return 0;
 }
 
+int get_m_info(int fd, mouse_event *p)
+{
+    int n;
+    char buf[8];
+
+    n = read(fd, buf, 3);
+
+    if (n > 0) 
+    {
+        p -> dx = buf[1];
+        p -> dy = -buf[2];
+        p -> button = (buf[0]&0x07);
+    }
+    
+    return 0;
+}
+
 int mouse_doing(void)
 {
     int fd;
+    mouse_event m_event;
 
     fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK);
     if (fd == -1) 
@@ -61,6 +80,19 @@ int mouse_doing(void)
     my = fb_v.h / 2;
 
     draw_cursor(mx, my);
+
+    while (1) 
+    {
+        if (get_m_info(fd, &m_event) > 0) 
+        {
+            mx += m_event.dx;
+            mx += m_event.dy;
+            mx = (mx < 0) ? 0 : mx;
+            my = (my < 0) ? 0 : my;
+
+            draw_cursor(mx, my);
+        }
+    }
     
     return 0;
 }
