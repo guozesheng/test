@@ -1,5 +1,5 @@
 # This is only for Test
-src=main.c init.c
+src=main.c init.c basic_shapes.c
 para=-o main -Wall
 
 main:$(src)

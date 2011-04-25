@@ -27,11 +27,11 @@ int init_screen(void)
         exit(0);
     }
 
-    fb_v.w = fb_var.xres;    //get the screen's width and heith
+    fb_v.w = fb_var.xres;    //get the screen's width and heigth and bits
     fb_v.h = fb_var.yres;
     fb_v.bpp = fb_var.bits_per_pixel;
 
-    printf("x=%d\ty=%d\tbits=%d\n", fb_v.w, fb_v.h, fb_v.bpp);
+    //printf("x=%d\ty=%d\tbits=%d\n", fb_v.w, fb_v.h, fb_v.bpp);
 
     p = mmap(NULL, fb_v.w*fb_v.h*fb_v.bpp/8, PROT_WRITE|PROT_READ, MAP_SHARED, fd, 0);  //#include <sys/mman.h>
     if (p == MAP_FAILED) 
@@ -52,7 +52,6 @@ int init_screen(void)
 
 int fb_pixel(int x, int y, u32_t color)
 {
-    //*((u32_t *)fb_v.memo + x + y * fb_v.w) = color;
     *((u32_t *)fb_v.memo + x + y * fb_v.w) = color;
     
     return 0;
