@@ -13,6 +13,12 @@
 #define C_W     10
 #define C_H     17
 
+#define ST_X    360
+#define ST_Y    100
+#define B_X     9
+#define B_Y     9
+#define SPACE   70
+
 typedef unsigned int u32_t;
 
 typedef struct
@@ -41,5 +47,6 @@ int draw_cursor(int x, int y);
 int mouse_doing(void);
 int save_bg(int x, int y);
 int rest_bg(int x, int y);
+int board_print(u32_t color_line, u32_t color_bg);
 
 #endif
