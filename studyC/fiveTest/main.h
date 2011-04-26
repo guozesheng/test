@@ -49,5 +49,6 @@ int mouse_doing(void);
 int save_bg(int x, int y);
 int rest_bg(int x, int y);
 int board_print(u32_t color_line, u32_t color_bg);
+int chess_do(void);
 
 #endif

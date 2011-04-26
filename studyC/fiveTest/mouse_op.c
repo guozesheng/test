@@ -110,7 +110,7 @@ int mouse_doing(void)
                     if (press_flag == 1) 
                     {
                         press_flag = 0;
-                        fb_circle_fill(mx, my, C_R, WHITE);
+                        chess_do();
                     }
                     break;
                 case 1: press_flag = 1; break;
