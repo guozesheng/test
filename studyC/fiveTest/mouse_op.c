@@ -61,7 +61,7 @@ int get_m_info(int fd, mouse_event *p)
         p -> button = (buf[0]&0x07);
     }
     
-    return 0;
+    return n;
 }
 
 int mouse_doing(void)
@@ -86,7 +86,7 @@ int mouse_doing(void)
         if (get_m_info(fd, &m_event) > 0) 
         {
             mx += m_event.dx;
-            mx += m_event.dy;
+            my += m_event.dy;
             mx = (mx < 0) ? 0 : mx;
             my = (my < 0) ? 0 : my;
 
