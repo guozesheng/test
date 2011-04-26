@@ -28,9 +28,13 @@ static u32_t cursor_pixel[C_W * C_H] =
     T___,T___,T___,T___,T___,T___,BORD,BORD,T___,T___
 };
 
+static u32_t cursor_bg[C_W * C_H] = {0};
+
 int draw_cursor(int x, int y)
 {
     int i, j;
+
+    save_bg(x, y);
 
     for (j = 0; j < C_H; j++) 
     {
@@ -85,12 +89,53 @@ int mouse_doing(void)
     {
         if (get_m_info(fd, &m_event) > 0) 
         {
+            rest_bg(mx, my);
             mx += m_event.dx;
             my += m_event.dy;
             mx = (mx < 0) ? 0 : mx;
             my = (my < 0) ? 0 : my;
+            
+            if (mx > fb_v.w - C_W) 
+            {
+                mx = fb_v.w - C_W;
+            }
+            if (my > fb_v.h - C_H) 
+            {
+                my = fb_v.h - C_H;
+            }
 
             draw_cursor(mx, my);
+        }
+        usleep(1000);
+    }
+    
+    return 0;
+}
+
+int save_bg(int x, int y)
+{
+    int i, j;
+
+    for (j = 0; j < C_H; j++) 
+    {
+        for (i = 0; i < C_W; i++) 
+        {
+            cursor_bg[i + j*C_W] = *((u32_t *)fb_v.memo + x + i + (y+j) * fb_v.w);
+        }
+    }
+    
+    return 0;
+}
+
+int rest_bg(int x, int y)
+{
+    int i, j;
+
+    for (j = 0; j < C_H; j++) 
+    {
+        for (i = 0; i < C_W; i++) 
+        {
+            fb_pixel(x+i, y+j, cursor_bg[i + j*C_W]);
         }
     }
     

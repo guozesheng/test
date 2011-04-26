@@ -39,5 +39,7 @@ int fb_line(int x1, int y1, int x2, int y2, u32_t color);
 int fb_circle_fill(int x0, int y0, int r, u32_t color);
 int draw_cursor(int x, int y);
 int mouse_doing(void);
+int save_bg(int x, int y);
+int rest_bg(int x, int y);
 
 #endif
