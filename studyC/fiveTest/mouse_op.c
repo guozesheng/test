@@ -71,6 +71,7 @@ int get_m_info(int fd, mouse_event *p)
 int mouse_doing(void)
 {
     int fd;
+    int press_flag = 0;
     mouse_event m_event;
 
     fd = open("/dev/input/mice", O_RDWR|O_NONBLOCK);
@@ -102,6 +103,21 @@ int mouse_doing(void)
             if (my > fb_v.h - C_H) 
             {
                 my = fb_v.h - C_H;
+            }
+            switch (m_event.button)
+            {
+                case 0:
+                    if (press_flag == 1) 
+                    {
+                        press_flag = 0;
+                        fb_circle_fill(mx, my, C_R, WHITE);
+                    }
+                    break;
+                case 1: press_flag = 1; break;
+                case 2: break;
+                case 3: break;
+                case 4: break;
+                default: break;
             }
 
             draw_cursor(mx, my);

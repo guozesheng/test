@@ -18,6 +18,7 @@
 #define B_X     9
 #define B_Y     9
 #define SPACE   70
+#define C_R     30
 
 typedef unsigned int u32_t;
 
