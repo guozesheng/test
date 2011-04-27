@@ -6,6 +6,22 @@ char chess_board[(B_X-1) * (B_Y-1)] = {0};
 char curent_player = 1;
 u32_t curent_color = BLACK;
 
+int chess_check(int x, int y)
+{
+    int i, j;
+    int xmove[8] = {1, 1, 0, -1, -1,  -1, 0, 1};
+    int ymove[8] = {0, -1, -1, -1, 0, 1, 1 ,1};
+    char other_player = curent_player == 1 ? 2 : 1;
+    int times = 0;
+
+    while (chess_board[(x+xmove[0]) + (y+ymove[0]) * B_X] == other_player) 
+    {
+        times++;
+    }
+    
+    return 0;
+}
+
 int chess_do(void)
 {
     int x, y;
@@ -28,17 +44,17 @@ int chess_do(void)
 
     if (chess_board[lx + ly*B_X] == 0) 
     {
+        fb_circle_fill(x, y, C_R, curent_color);
+
         if (curent_player == 1) 
         {
-            chess_board[lx + ly*B_X] = 1;
-            fb_circle_fill(x, y, C_R, curent_color);
+            chess_board[lx + ly*B_X] = curent_player;
             curent_player = 2;
             curent_color = WHITE;
         }
         else 
         {
-            chess_board[lx + ly*B_X] = 2;
-            fb_circle_fill(x, y, C_R, curent_color);
+            chess_board[lx + ly*B_X] = curent_player;
             curent_player = 1;
             curent_color = BLACK;
         }
