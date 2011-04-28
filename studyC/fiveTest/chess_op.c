@@ -10,29 +10,31 @@ extern u32_t curent_color;
 
 int chess_check(int x, int y)
 {
-    int i;
+    int i, j;
     int xmove[8] = {1, 1, 0, -1, -1,  -1, 0, 1};
     int ymove[8] = {0, -1, -1, -1, 0, 1, 1 ,1};
     int xt, yt;
     int times = 0;
 
-    xt = x + xmove[0];
-    yt = y + ymove[0];
-    while (chess_board[xt + yt * (B_X-1)] == other_player && xt >= 0 && xt < B_X-1 && yt >= 0 && yt < B_Y-1) 
+    for (j = 0; j < 8; j++) 
     {
-        times++;
-        xt += xmove[0];
-        yt += ymove[0];
-        //fb_circle_fill(xt*SPACE + ST_X + SPACE/2, yt*SPACE + ST_Y + SPACE/2, C_R, curent_color);
-    }
-    if (chess_board[xt + yt * (B_X-1)] != curent_player) 
-    {
-        times = 0;
-    }
-    for (i = 0, xt = x + xmove[0], yt = y + ymove[0]; i < times; i++, xt += xmove[0], yt += ymove[0]) 
-    {
-        fb_circle_fill(xt*SPACE + ST_X + SPACE/2, yt*SPACE + ST_Y + SPACE/2, C_R, curent_color);
-        chess_board[xt + yt * (B_X-1)] = curent_player;
+        xt = x + xmove[j];
+        yt = y + ymove[j];
+        while (chess_board[xt + yt * (B_X-1)] == other_player && xt >= 0 && xt < B_X-1 && yt >= 0 && yt < B_Y-1) 
+        {
+            times++;
+            xt += xmove[j];
+            yt += ymove[j];
+        }
+        if (chess_board[xt + yt * (B_X-1)] != curent_player) 
+        {
+            times = 0;
+        }
+        for (i = 0, xt = x + xmove[j], yt = y + ymove[j]; i < times; i++, xt += xmove[j], yt += ymove[j]) 
+        {
+            fb_circle_fill(xt*SPACE + ST_X + SPACE/2, yt*SPACE + ST_Y + SPACE/2, C_R, curent_color);
+            chess_board[xt + yt * (B_X-1)] = curent_player;
+        }
     }
     
     return 0;
