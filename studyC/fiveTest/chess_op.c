@@ -17,22 +17,23 @@ int chess_check(int x, int y)
     int times = 0;
 
     xt = x + xmove[0];
-    yt = y + xmove[0];
+    yt = y + ymove[0];
     while (chess_board[xt + yt * (B_X-1)] == other_player && xt >= 0 && xt < B_X-1 && yt >= 0 && yt < B_Y-1) 
     {
         times++;
         xt += xmove[0];
         yt += ymove[0];
-        printf("x:%d, y:%d\n", x, y);
-        printf("%d, %d, %d\n", xt, yt, C_R);
-        //fb_circle_fill(xt, yt, C_R, curent_color);
+        //fb_circle_fill(xt*SPACE + ST_X + SPACE/2, yt*SPACE + ST_Y + SPACE/2, C_R, curent_color);
     }
-    //for (i = 0, xt = x + xmove[0], yt = y + xmove[0]; i < times; i++, xt += xmove[0], yt += ymove[0]) 
-    //{
-        //printf("Hello\n");
-        //fb_circle_fill(xt, yt, C_R, curent_color);
-        ////chess_board[xt + yt * (B_X-1)] = curent_player;
-    //}
+    if (chess_board[xt + yt * (B_X-1)] != curent_player) 
+    {
+        times = 0;
+    }
+    for (i = 0, xt = x + xmove[0], yt = y + ymove[0]; i < times; i++, xt += xmove[0], yt += ymove[0]) 
+    {
+        fb_circle_fill(xt*SPACE + ST_X + SPACE/2, yt*SPACE + ST_Y + SPACE/2, C_R, curent_color);
+        chess_board[xt + yt * (B_X-1)] = curent_player;
+    }
     
     return 0;
 }
