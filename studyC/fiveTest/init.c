@@ -8,6 +8,11 @@
 #include "main.h"
 
 fbsrc_t fb_v;
+char chess_board[(B_X-1) * (B_Y-1)] = {0};
+char curent_player = 1;
+char other_player = 2;
+u32_t curent_color = BLACK;
+
 
 int init_screen(void)
 {
