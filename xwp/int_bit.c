@@ -2,6 +2,7 @@
 
 int com_bit(int n);
 int sort(unsigned int *a, int len);
+void swap(unsigned int *a, unsigned int *b);
 
 int main(int argc, const char *argv[])
 {
@@ -19,10 +20,17 @@ int main(int argc, const char *argv[])
     return 0;
 }
 
+void swap(unsigned int *a, unsigned int *b)
+{
+    unsigned int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 int sort(unsigned int *a, int len)
 {
     int i, j;
-    int temp;
     int b1, b2;
 
     for (i = 0; i < len - 1; i++) 
@@ -33,17 +41,13 @@ int sort(unsigned int *a, int len)
             b2 = com_bit(*(a + j));
             if (b1 > b2) 
             {
-                temp = *(a + i);
-                *(a + i) = *(a + j);
-                *(a + j) = temp;
+                swap(a + i, a + j);
             }
             else if (b1 == b2) 
             {
                 if (*(a + i) > *(a + j)) 
                 {
-                    temp = *(a + i);
-                    *(a + i) = *(a + j);
-                    *(a + j) = temp;
+                    swap(a + i, a + j);
                 }
             }
         }
