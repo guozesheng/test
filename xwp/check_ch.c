@@ -9,7 +9,14 @@ int main(int argc, const char *argv[])
 
     c = check_ch(str);
 
-    printf("%c\n", c);
+    if (c != '\0') 
+    {
+        printf("%c\n", c);
+    }
+    else 
+    {
+        printf("No match\n");
+    }
     
     return 0;
 }
@@ -17,19 +24,25 @@ int main(int argc, const char *argv[])
 char check_ch(const char *str)
 {
     char ch;
-    char *p = str;
+    const char *p = str;
 
-    for (ch = *str; *str != '\0'; str++, p = str) 
+    for (; *str != '\0'; str++) 
     {
-        if (*p == '\0') 
+        ch = *str;
+        p = str + 1;
+        do 
         {
-            break;
-        }
-        else if (*p == ch) 
-        {
-            continue;
-        }
+            if (*p == '\0') 
+            {
+                return ch;
+            }
+            else if (*p == ch) 
+            {
+                break;
+            }
+            p++;
+        } while (1);
     }
 
-    return ch;
+    return '\0';
 }
