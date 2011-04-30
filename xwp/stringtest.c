@@ -47,7 +47,6 @@ int my_strcmp(char *dest, char (*src)[10], int num)
         {
             return 0;
         }
-        src++;
     }
 
     return 1;
