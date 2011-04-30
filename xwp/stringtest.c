@@ -11,14 +11,11 @@ int main(int argc, const char *argv[])
     
     for (i = 0; i < 5; i++) 
     {
-        printf("Please input a name %d:", i);
-        fgets(tmp, 10, stdin);
-        
-        while (my_strcmp(tmp, name[0], i) == 0) 
+        do 
         {
-            printf("Please input name again %d:", i);
+            printf("Please input a name %d:", i);
             fgets(tmp, 10, stdin);
-        }
+        } while (my_strcmp(tmp, name[0], i) == 0);
 
         strcpy(name[i], tmp);
         
