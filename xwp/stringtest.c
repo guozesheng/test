@@ -1,21 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 
-int my_strcmp(const char *dest, const char *src, int num);
+int my_strcmp(char *dest, char (*src)[10], int num);
 
 int main(int argc, const char *argv[])
 {
     char name[5][10];
     char tmp[10];
+    char msg[10] = " ";
     int i;
     
-    for (i = 0; i < 5; i++) 
+    for (i = 0; i < 5; i++, strcpy(msg, " ")) 
     {
         do 
         {
-            printf("Please input a name %d:", i);
+            printf("Please input a name %d%s:", i, msg);
             fgets(tmp, 10, stdin);
-        } while (my_strcmp(tmp, name[0], i) == 0);
+            strcpy(msg, " again");
+        } while (my_strcmp(tmp, name, i) == 0);
 
         strcpy(name[i], tmp);
         
@@ -30,7 +32,7 @@ int main(int argc, const char *argv[])
     return 0;
 }
 
-int my_strcmp(const char *dest, const char *src, int num)
+int my_strcmp(char *dest, char (*src)[10], int num)
 {
     int i;
 
@@ -41,7 +43,7 @@ int my_strcmp(const char *dest, const char *src, int num)
 
     for (i = 0; i < num; i++) 
     {
-        if (strcmp(dest, src) == 0) 
+        if (strcmp(dest, src[i]) == 0) 
         {
             return 0;
         }
