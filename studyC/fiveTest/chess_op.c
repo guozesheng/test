@@ -14,9 +14,9 @@ int chess_check(int x, int y)
     int xmove[8] = {1, 1, 0, -1, -1,  -1, 0, 1};
     int ymove[8] = {0, -1, -1, -1, 0, 1, 1 ,1};
     int xt, yt;
-    int times = 0;
+    int times;
 
-    for (j = 0; j < 8; j++) 
+    for (j = 0, times = 0; j < 8; j++, times = 0) 
     {
         xt = x + xmove[j];
         yt = y + ymove[j];
