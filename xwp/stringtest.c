@@ -23,9 +23,10 @@ int main(int argc, const char *argv[])
 
     for (i = 0; i < 5; i++) 
     {
-        printf("%d\t%s\n", i, name[i]);
+        printf("%d\t%s", i, name[i]);
     }
     
+    printf("\n");
     return 0;
 }
 
