@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int com_bit(int n);
+int com_bit(unsigned int n);
 int sort(unsigned int *a, int len);
 void swap(unsigned int *a, unsigned int *b);
 
@@ -57,7 +57,7 @@ int sort(unsigned int *a, int len)
     return 0;
 }
 
-int com_bit(int n)
+int com_bit(unsigned int n)
 {
     int num = 0;
     int mask = 0x01;
