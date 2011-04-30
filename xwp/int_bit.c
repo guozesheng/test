@@ -27,11 +27,10 @@ int sort(unsigned int *a, int len)
 
     for (i = 0; i < len - 1; i++) 
     {
+        b1 = com_bit(*(a + i));
         for (j = i + 1; j < len; j++) 
         {
-            b1 = com_bit(*(a + i));
             b2 = com_bit(*(a + j));
-            printf("%d%%%d:%d, %d%%%d:%d\n", *(a + i), i, b1, *(a + j), j, b2);
             if (b1 > b2) 
             {
                 temp = *(a + i);
@@ -60,7 +59,7 @@ int com_bit(int n)
     int mask = 0x01;
     int i;
 
-    for (i = 0; i < 32; i++, mask <<= 1) 
+    for (i = 0; i < sizeof(int) * 8; i++, mask <<= 1) 
     {
         num += (n & mask) != 0 ? 1 : 0;
     }
