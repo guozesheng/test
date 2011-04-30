@@ -36,6 +36,17 @@ int chess_check(int x, int y)
             chess_board[xt + yt * (B_X-1)] = curent_player;
         }
     }
+
+    //for test
+    for (i = 0; i < (B_X-1) * (B_Y-1); i++) 
+    {
+        printf("%3d,", chess_board[i]);
+        if (i % 7 == 0) 
+        {
+            printf("\n");
+        }
+        printf("\n");
+    }
     
     return 0;
 }
