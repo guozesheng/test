@@ -2,11 +2,12 @@
 
 int main(int argc, const char *argv[])
 {
-    char ch = 'A';
-    ch +=30;
+    char ch = 'd';
+    int i;
+    //ch +=30;
     if ((ch >= 'A') & (ch <= 'Z')) 
     {
-        printf("hello\n");
+        printf("Hello, world!\n");
     }
     return 0;
 }
