@@ -3,7 +3,6 @@ LDFLAG = -shared
 INC = -Iinc
 LIB = -L. -ltest
 src = main.c
-#libso = $(patsubst %.so, $(libsrc))
 libsrc = $(wildcard test/*.c)
 obj = $(patsubst %.c, %.o, $(libsrc))
 CC = gcc
