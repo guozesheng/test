@@ -1,12 +1,18 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int main(int argc, const char *argv[])
 {
     int fd, fd_w;
     char temp[4096];
     int size;
+
+    if (argc != 3) 
+    {
+        exit(1);
+    }
 
     fd = open(argv[1], O_RDONLY);
     fd_w = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0666);
