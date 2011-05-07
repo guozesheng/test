@@ -5,7 +5,7 @@ int main(int argc, const char *argv[])
     struct struct_memory_tt 
     {
         short int b;
-        char a[1];
+        char a[9];
         //char b;
     } str;
     struct struct_memory_t 
