@@ -5,6 +5,7 @@
 int init_array(int *a, int len);
 int print_array(int *a, int len);
 int sort_array(int *a, int len);
+int sort_array_pointer(int *a, int len);
 
 int main(int argc, const char *argv[])
 {
@@ -14,8 +15,33 @@ int main(int argc, const char *argv[])
     init_array(a, len);
     print_array(a, len);
 
-    sort_array(a, len);
+    sort_array_pointer(a, len);
     print_array(a, len);
+    
+    return 0;
+}
+
+int sort_array_pointer(int *a, int len)
+{
+    int *p = a;
+    int *q = a + len - 1;
+    int temp;
+
+    while (p < q) 
+    {
+        while ((*p % 2) && (p < q)) 
+        {
+            p++;
+        }
+        while (!(*q % 2) && (p < q)) 
+        {
+            q--;
+        }
+
+        temp = *p;
+        *p = *q;
+        *q = temp;
+    }
     
     return 0;
 }
@@ -36,6 +62,7 @@ int sort_array(int *a, int len)
         {
             end--;
         }
+
         temp = *(a + start);
         *(a + start) = *(a + end);
         *(a + end) = temp;
