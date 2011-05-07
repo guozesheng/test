@@ -7,12 +7,12 @@ int main(int argc, const char *argv[])
     char temp[4096];
     int n;
 
-    if ((fp_src = fopen("a.text", "r")) == NULL)
+    if ((fp_src = fopen(argv[1], "r")) == NULL)
     {
         perror("fopen a.text");
         exit(1);
     }
-    if ((fp_dest = fopen("b.text", "w+")) == NULL) 
+    if ((fp_dest = fopen(argv[2], "w+")) == NULL) 
     {
         perror("fopen b.text");
         exit(1);
