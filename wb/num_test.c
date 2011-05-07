@@ -29,15 +29,25 @@ int sort_array_insert(int *a, int len)
     int end = len;
     int temp;
 
-    for (i = 0; i < len; i++, start = 0, end = len)
+    for (i = 0; i < len; i++)
     {
         while (1) 
         {
+            start = 0;
+            end = len - 1;
             if (*(a + i) % 2) 
             {
-                while ((*(a + start) < *(a + i)) && (*(a + i + 1) % 2)) 
+                while ((start < i) && !(*(a + start) > *(a + i)))
                 {
+                    if (!(*(a + i) % 2))
+                    {
+                        break;
+                    }
                     start++;
+                }
+                if (i == start)
+                {
+                    break;
                 }
                 temp = *(a + i);
                 *(a + i) = *(a + start);
@@ -45,19 +55,22 @@ int sort_array_insert(int *a, int len)
             }
             else 
             {
-                while ((*(a + end) > *(a + i)) && (!*(a + end - 1) % 2)) 
+                while ((i < end) && !(*(a + i) < *(a + end)))
                 {
+                    if (*(a + end) % 2)
+                    {
+                        break;
+                    }
                     end--;
                 }
                 temp = *(a + i);
                 *(a + i) = *(a + end);
                 *(a + end) = temp;
             }
-            if (start > end) 
+            if (i == end || i == start) 
             {
                 break;
             }
-            
         }
     }
     
