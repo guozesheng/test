@@ -6,6 +6,7 @@ int init_array(int *a, int len);
 int print_array(int *a, int len);
 int sort_array(int *a, int len);
 int sort_array_pointer(int *a, int len);
+int sort_array_insert(int *a, int len);
 
 int main(int argc, const char *argv[])
 {
@@ -15,8 +16,50 @@ int main(int argc, const char *argv[])
     init_array(a, len);
     print_array(a, len);
 
-    sort_array_pointer(a, len);
+    sort_array_insert(a, len);
     print_array(a, len);
+    
+    return 0;
+}
+
+int sort_array_insert(int *a, int len)
+{
+    int i;
+    int start = 0;
+    int end = len;
+    int temp;
+
+    for (i = 0; i < len; i++, start = 0, end = len)
+    {
+        while (1) 
+        {
+            if (*(a + i) % 2) 
+            {
+                while ((*(a + start) < *(a + i)) && (*(a + i + 1) % 2)) 
+                {
+                    start++;
+                }
+                temp = *(a + i);
+                *(a + i) = *(a + start);
+                *(a + start) = temp;
+            }
+            else 
+            {
+                while ((*(a + end) > *(a + i)) && (!*(a + end - 1) % 2)) 
+                {
+                    end--;
+                }
+                temp = *(a + i);
+                *(a + i) = *(a + end);
+                *(a + end) = temp;
+            }
+            if (start > end) 
+            {
+                break;
+            }
+            
+        }
+    }
     
     return 0;
 }
@@ -51,6 +94,7 @@ int sort_array(int *a, int len)
     int start = 0;
     int end = len;
     int temp;
+    int i, j;
 
     while (start < end) 
     {
@@ -66,6 +110,31 @@ int sort_array(int *a, int len)
         temp = *(a + start);
         *(a + start) = *(a + end);
         *(a + end) = temp;
+    }
+
+    for (i = 0; i < start - 1; i++) 
+    {
+        for (j = i + 1; j < start; j++) 
+        {
+            if (*(a + i) > *(a + j)) 
+            {
+                temp = *(a + i);
+                *(a + i) = *(a + j);
+                *(a + j) = temp;
+            }
+        }
+    }
+    for (i = end; i < len - 1; i++) 
+    {
+        for (j = i + 1; j < len; j++) 
+        {
+            if (*(a + i) > *(a + j)) 
+            {
+                temp = *(a + i);
+                *(a + i) = *(a + j);
+                *(a + j) = temp;
+            }
+        }
     }
     
     return 0;
@@ -91,7 +160,7 @@ int init_array(int *a, int len)
     srand(time(NULL));
     for (i = 0; i < len; i++) 
     {
-        *(a + i) = rand() % 80 + 20;
+        *(a + i) = rand() % 90 + 10;
     }
     
     return 0;
