@@ -7,7 +7,7 @@ int main(int argc, const char *argv[])
 {
     int fd;
 
-    if ((fd = open("a.text", O_RDONLY | O_WRONLY)) < 0)
+    if ((fd = open("a.text", O_RDWR)) < 0)
     {
         perror("open fail");
         exit(1);
