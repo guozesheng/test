@@ -10,9 +10,9 @@
 int main(int argc, const char *argv[])
 {
     int *pi, *po;
+    struct stat length;
     int fd_in = open(argv[1], O_RDONLY);
     int fd_out = open(argv[2], O_RDWR | O_CREAT | O_TRUNC, 0666);
-    struct stat length;
 
     if (fd_in < 0 || fd_out < 0) 
     {
@@ -29,8 +29,8 @@ int main(int argc, const char *argv[])
     lseek(fd_out, length.st_size-1, SEEK_SET);
     write(fd_out, "", 1);
     
-    pi = mmap(NULL, length.st_size, PROT_READ, MAP_PRIVATE, fd_in, 0);//fstat
-    po = mmap(NULL, length.st_size, PROT_WRITE, MAP_SHARED, fd_out, 0);//memcpy
+    pi = mmap(NULL, length.st_size, PROT_READ, MAP_PRIVATE, fd_in, 0);
+    po = mmap(NULL, length.st_size, PROT_WRITE, MAP_SHARED, fd_out, 0);
     if (pi == MAP_FAILED || po == MAP_FAILED) 
     {
         perror("mmap");
