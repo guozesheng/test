@@ -8,6 +8,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/user.h>
 
 int main(int argc, const char *argv[])
 {
@@ -52,7 +53,7 @@ int fb_open(PFBDEV pFbdev)
         return -1;
     }
 
-    //pFbdev->fb_mem_offset = (unsigned long)(pFbdev->fb_fix.smem_start) & (~PAGE_MASK); //?
+    pFbdev->fb_mem_offset = (unsigned long)(pFbdev->fb_fix.smem_start) & (~PAGE_MASK); //?
     pFbdev->fb_mem_offset = (unsigned long int)mmap(NULL, pFbdev->fb_fix.smem_len + pFbdev->fb_mem_offset, PROT_READ | PROT_WRITE, MAP_SHARED, pFbdev->fb, 0);
 
     if ((long)pFbdev->fb_mem == -1) 
