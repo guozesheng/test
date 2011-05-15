@@ -37,8 +37,9 @@ void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color)
 {
     int i;
     int y;
+    //float rely;
     float a = (y2 - y1) / (float)(x2 - x1);
-    float b = y1 - ((y2 - y1) / (x2 - x1)) * x1;
+    float b = y1 - a * x1;
 
     for (i = x1; i < x2; i++) 
     {
