@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "fbtools.h"
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -9,6 +8,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <sys/user.h>
+#include <time.h>
+#include "fbtools.h"
 
 int main(int argc, const char *argv[])
 {
@@ -23,9 +24,61 @@ int main(int argc, const char *argv[])
     }
 
     fb_memset((void *)(fbdev.fb_mem + fbdev.fb_mem_offset), 0, fbdev.fb_fix.smem_len);
+
+    fb_drawline(&fbdev, 100, 100, 500, 300, 0x00ff0000);
+
+    //test(fbdev);
+
     fb_close(&fbdev);
-    
     return 0;
+}
+
+void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color)
+{
+    int i;
+    int a = (y2 - y1) / (x2 - x1);
+    int b = y1 - ((y2 - y1) / (x2 - x1)) * x1;
+
+    for (i = x1; i < x2; i++) 
+    {
+        fb_drawpixel(pFbdev, i, a * i + b, color);
+    }
+}
+
+// /*
+void fb_drawbg(PFBDEV pFbdev)
+{
+    int i;
+
+    srand(time(NULL));
+    while (1)
+    {
+        usleep(90000);
+        fb_memset((void *)(pFbdev->fb_mem + pFbdev->fb_mem_offset), 0, pFbdev->fb_fix.smem_len);
+        for (i = 0; i < 1000; i++) 
+        {
+            fb_drawpixel(pFbdev, rand()%1024, rand()%768, rand()%0x00ffffff);
+        }
+    }
+}
+// */
+
+void fb_drawvline(PFBDEV pFbdev, int x, int y, u32_t color)
+{
+    int i;
+    for (i = 0; i < pFbdev->fb_var.yres; i++) 
+    {
+        fb_drawpixel(pFbdev, x, i, color);
+    }
+}
+
+void fb_drawpixel(PFBDEV pFbdev, int x, int y, u32_t color)
+{
+    int i;
+    u32_t *p = (u32_t *)pFbdev->fb_mem;
+
+    i = x + y * pFbdev->fb_var.xres;
+    p[i] = color;
 }
 
 void fb_memset(void *addr, int c, size_t len)
@@ -54,7 +107,7 @@ int fb_open(PFBDEV pFbdev)
     }
 
     pFbdev->fb_mem_offset = (unsigned long)(pFbdev->fb_fix.smem_start) & (~PAGE_MASK); //?
-    pFbdev->fb_mem_offset = (unsigned long int)mmap(NULL, pFbdev->fb_fix.smem_len + pFbdev->fb_mem_offset, PROT_READ | PROT_WRITE, MAP_SHARED, pFbdev->fb, 0);
+    pFbdev->fb_mem = (unsigned long int)mmap(NULL, pFbdev->fb_fix.smem_len + pFbdev->fb_mem_offset, PROT_READ | PROT_WRITE, MAP_SHARED, pFbdev->fb, 0);
 
     if ((long)pFbdev->fb_mem == -1) 
     {
