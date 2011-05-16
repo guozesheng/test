@@ -26,8 +26,9 @@ int main(int argc, const char *argv[])
 
     fb_memset((void *)(fbdev.fb_mem + fbdev.fb_mem_offset), 0, fbdev.fb_fix.smem_len);
 
-    fb_drawcircle(&fbdev, 300, 300, 70, 0x0000ff00);
-    test(fbdev);
+    //fb_drawcircle(&fbdev, 300, 300, 70, 0x0000ff00);
+    mouse_test(&fbdev);
+    //test(fbdev);
 
     fb_close(&fbdev);
     return 0;
