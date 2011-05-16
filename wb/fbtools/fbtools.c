@@ -26,6 +26,7 @@ int main(int argc, const char *argv[])
 
     fb_memset((void *)(fbdev.fb_mem + fbdev.fb_mem_offset), 0, fbdev.fb_fix.smem_len);
 
+    fb_drawcircle(&fbdev, 300, 300, 70, 0x0000ff00);
     //test(fbdev);
 
     fb_close(&fbdev);
@@ -35,10 +36,20 @@ int main(int argc, const char *argv[])
 void fb_drawcircle(PFBDEV pFbdev, int x, int y, int r, u32_t color)
 {
     int i;
+    int relr;
 
-    for (i = 0; i < r; i++) 
+    for (i = 0; i < y; i++) 
     {
-        fb_drawpixel(pFbdev, x + i, y + sqrt(r * r - i * i), color);
+        relr = ((int)(sqrt(r * r - i * i) * 10) % 10) > 4 ? sqrt(r * r - i * i) + 1 : sqrt(r * r - i * i);
+        fb_drawpixel(pFbdev, x + i, y + relr, color);
+        fb_drawpixel(pFbdev, x + i, y - relr, color);
+        fb_drawpixel(pFbdev, x - i, y + relr, color);
+        fb_drawpixel(pFbdev, x - i, y - relr, color);
+        fb_drawpixel(pFbdev, x + relr, y + i, color);
+        fb_drawpixel(pFbdev, x + relr, y - i, color);
+        fb_drawpixel(pFbdev, x - relr, y + i, color);
+        fb_drawpixel(pFbdev, x - relr, y - i, color);
+        getchar();
     }
 }
 
