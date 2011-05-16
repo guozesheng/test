@@ -27,7 +27,7 @@ int main(int argc, const char *argv[])
     fb_memset((void *)(fbdev.fb_mem + fbdev.fb_mem_offset), 0, fbdev.fb_fix.smem_len);
 
     fb_drawcircle(&fbdev, 300, 300, 70, 0x0000ff00);
-    //test(fbdev);
+    test(fbdev);
 
     fb_close(&fbdev);
     return 0;
@@ -49,7 +49,6 @@ void fb_drawcircle(PFBDEV pFbdev, int x, int y, int r, u32_t color)
         fb_drawpixel(pFbdev, x + relr, y - i, color);
         fb_drawpixel(pFbdev, x - relr, y + i, color);
         fb_drawpixel(pFbdev, x - relr, y - i, color);
-        getchar();
     }
 }
 
@@ -80,14 +79,7 @@ void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color)
         xe = (x1 < x2) ? x2 : x1;
         for (i = x; i < xe; i++) 
         {
-            if (((int)((a * i + b) * 10) % 10) > 4)
-            {
-                y = a * i + b + 1;
-            }
-            else 
-            {
-                y= a * i + b;
-            }
+            y = (((int)((a * i + b) * 10) % 10) > 4) ? (a * i + b + 1) : (a * i + b);
             fb_drawpixel(pFbdev, i, y, color);
         }
     }
@@ -97,14 +89,7 @@ void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color)
         ye = (y1 < y2 ) ? y2 : y1;
         for (i = y; i < ye; i++) 
         {
-            if (((int)(((i - b) / a) * 10) % 10) > 4) 
-            {
-                x = (i - b) / a + 1;
-            }
-            else 
-            {
-                x = (i - b) / a;
-            }
+            x = (((int)(((i - b) / a) * 10) % 10) > 4) ? ((i - b) / a + 1) : ((i - b) / a);
             fb_drawpixel(pFbdev, x, i, color);
         }
     }
