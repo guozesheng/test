@@ -38,7 +38,7 @@ void fb_drawcircle(PFBDEV pFbdev, int x, int y, int r, u32_t color)
     int i;
     int relr;
 
-    for (i = 0; i < y; i++) 
+    for (i = 0; i < r; i++) 
     {
         relr = ((int)(sqrt(r * r - i * i) * 10) % 10) > 4 ? sqrt(r * r - i * i) + 1 : sqrt(r * r - i * i);
         fb_drawpixel(pFbdev, x + i, y + relr, color);
