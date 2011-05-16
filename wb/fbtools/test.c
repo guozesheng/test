@@ -6,6 +6,11 @@ void test(FBDEV fbdev)
     int i, j;
 
     fb_drawvline(&fbdev, 200, 100, 0x000000ff);
+    fb_drawline(&fbdev, 300, 500, 100, 200, 0x00ff0000);
+    fb_drawline(&fbdev, 400, 100, 500, 500, 0x00ff0000);
+    fb_drawline(&fbdev, 350, 100, 500, 100, 0x0000ff00);
+    fb_drawline(&fbdev, 350, 100, 350, 500, 0x0000ff00);
+
     // /*
     for (j = 0; j < 100; j++) 
     {
@@ -30,5 +35,5 @@ void test(FBDEV fbdev)
     }
    // */
 
-    fb_drawbg(&fbdev);
+   //fb_drawbg(&fbdev);
 }

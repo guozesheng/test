@@ -23,6 +23,7 @@ void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color);
 void fb_drawbg(PFBDEV pFbdev);
 void fb_drawvline(PFBDEV pFbdev, int x, int y, u32_t color);
 void fb_drawpixel(PFBDEV pFbdev, int x, int y, u32_t color);
+void fb_drawcircle(PFBDEV pFbdev, int x, int y, int r, u32_t color);
 void test(FBDEV fbdev);
 
 #endif

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <sys/user.h>
 #include <time.h>
+#include <math.h>
 #include "fbtools.h"
 
 int main(int argc, const char *argv[])
@@ -25,37 +26,80 @@ int main(int argc, const char *argv[])
 
     fb_memset((void *)(fbdev.fb_mem + fbdev.fb_mem_offset), 0, fbdev.fb_fix.smem_len);
 
-    fb_drawline(&fbdev, 100, 100, 500, 300, 0x00ff0000);
-
     //test(fbdev);
 
     fb_close(&fbdev);
     return 0;
 }
 
-void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color)
+void fb_drawcircle(PFBDEV pFbdev, int x, int y, int r, u32_t color)
 {
     int i;
-    int y;
-    //float rely;
-    float a = (y2 - y1) / (float)(x2 - x1);
-    float b = y1 - a * x1;
 
-    for (i = x1; i < x2; i++) 
+    for (i = 0; i < r; i++) 
     {
-        if (((int)((a * i + b) * 10) % 10) > 4)
-        {
-            y = a * i + b + 1;
-        }
-        else 
-        {
-            y= a * i + b;
-        }
-        fb_drawpixel(pFbdev, i, y, color);
+        fb_drawpixel(pFbdev, x + i, y + sqrt(r * r - i * i), color);
     }
 }
 
-// /*
+void fb_drawline(PFBDEV pFbdev, int x1, int y1, int x2, int y2, u32_t color)
+{
+    int i;
+    int x, xe, y, ye;
+    float a;
+    float b;
+
+    if (x1 == x2) 
+    {
+        y = (y1 < y2 ) ? y1 : y2;
+        ye = (y1 < y2 ) ? y2 : y1;
+        for (i = y; i < ye; i++) 
+        {
+            fb_drawpixel(pFbdev, x1, i, color);
+        }
+        return;
+    }
+
+    a = (y2 - y1) / (float)(x2 - x1);
+    b = y1 - a * x1;
+
+    if (a <= 0) 
+    {
+        x = (x1 < x2) ? x1 : x2;
+        xe = (x1 < x2) ? x2 : x1;
+        for (i = x; i < xe; i++) 
+        {
+            if (((int)((a * i + b) * 10) % 10) > 4)
+            {
+                y = a * i + b + 1;
+            }
+            else 
+            {
+                y= a * i + b;
+            }
+            fb_drawpixel(pFbdev, i, y, color);
+        }
+    }
+    else
+    {
+        y = (y1 < y2 ) ? y1 : y2;
+        ye = (y1 < y2 ) ? y2 : y1;
+        for (i = y; i < ye; i++) 
+        {
+            if (((int)(((i - b) / a) * 10) % 10) > 4) 
+            {
+                x = (i - b) / a + 1;
+            }
+            else 
+            {
+                x = (i - b) / a;
+            }
+            fb_drawpixel(pFbdev, x, i, color);
+        }
+    }
+}
+
+//*
 void fb_drawbg(PFBDEV pFbdev)
 {
     int i;
