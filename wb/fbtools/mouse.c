@@ -58,7 +58,7 @@ int mouse_save(PFBDEV pFbdev, int x, int y)
     {
         for (i = 0; i < C_WIDTH; i++) 
         {
-            save_cursor[i + j * C_WIDTH] = *(u32_t *)(pFbdev->fb_mem + ((x+i) + (y+j) * pFbdev->fb_var.xres) * pFbdev->fb_var.bits_per_pixel / 8);
+            save_cursor[i + j * C_WIDTH] = *(u32_t *)(pFbdev->fb_mem + (x+i) + (y+j) * pFbdev->fb_var.xres);
         }
     }
     
@@ -73,7 +73,7 @@ int mouse_restore(PFBDEV pFbdev, int x, int y)
     {
         for (i = 0; i < C_WIDTH; i++) 
         {
-            fb_drawpixel(pFbdev, x + i, x + j, save_cursor[i + j * C_WIDTH]);
+            fb_drawpixel(pFbdev, x + i, y + j, save_cursor[i + j * C_WIDTH]);
         }
     }
     
