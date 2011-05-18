@@ -2,6 +2,7 @@
 
 src = $(wildcard *.c)
 para = -o main -Wall -ljpeg
+img = test.jpg
 
 main:$(src)
 	gcc $(src) $(para)
@@ -10,4 +11,4 @@ clean:
 	rm -rf *.o
 	rm -rf ~*
 run:
-	./main
+	./main $(img)

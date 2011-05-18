@@ -8,7 +8,7 @@
 
 extern struct fbsrc_t fb_v;
 
-int jpeg_main(char *img_file)
+int jpeg_main(const char *img_file)
 {
     struct jpeg_decompress_struct cinfo;
     struct jpeg_error_mgr jerr;
