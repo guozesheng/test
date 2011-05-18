@@ -7,7 +7,7 @@
 #include "fbtools.h"
 
 static u32_t cursor_pixel[C_WIDTH * C_HEIGHT] = {
-    BORD,T___,T___,T___,T___,T___,T___,T___,T___,T___,
+    BORD,T___,T___,T___,T___,T___,T___,T___,T___,T___,/*{{{*/
     BORD,BORD,T___,T___,T___,T___,T___,T___,T___,T___,  
     BORD,X___,BORD,T___,T___,T___,T___,T___,T___,T___,
     BORD,X___,X___,BORD,T___,T___,T___,T___,T___,T___,
@@ -23,12 +23,12 @@ static u32_t cursor_pixel[C_WIDTH * C_HEIGHT] = {
     BORD,BORD,T___,T___,BORD,X___,X___,BORD,T___,T___,
     T___,T___,T___,T___,T___,BORD,X___,X___,BORD,T___,
     T___,T___,T___,T___,T___,BORD,X___,X___,BORD,T___,
-    T___,T___,T___,T___,T___,T___,BORD,BORD,T___,T___
+    T___,T___,T___,T___,T___,T___,BORD,BORD,T___,T___/*}}}*/
 };
 static u32_t save_cursor[C_WIDTH * C_HEIGHT] = {0};
 
 int mouse_parse(int fd, mevent_t *mevent)
-{
+{/*{{{*/
     s8_t buf[READ_MOUSE];
     int n;
 
@@ -47,11 +47,11 @@ int mouse_parse(int fd, mevent_t *mevent)
     }
 
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int mouse_save(PFBDEV pFbdev, int x, int y)
-{
+{/*{{{*/
     int i, j;
 
     for (j = 0; j < C_HEIGHT; j++) 
@@ -62,11 +62,11 @@ int mouse_save(PFBDEV pFbdev, int x, int y)
         }
     }
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int mouse_restore(PFBDEV pFbdev, int x, int y)
-{
+{/*{{{*/
     int i, j;
 
     for (j = 0; j < C_HEIGHT; j++) 
@@ -77,11 +77,11 @@ int mouse_restore(PFBDEV pFbdev, int x, int y)
         }
     }
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int mouse_draw(PFBDEV pFbdev, int x, int y)
-{
+{/*{{{*/
     int i, j;
 
     mouse_save(pFbdev, x, y);
@@ -97,7 +97,7 @@ int mouse_draw(PFBDEV pFbdev, int x, int y)
         }
     }
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int mouse_test(PFBDEV pFbdev)
