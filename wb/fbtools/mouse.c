@@ -125,8 +125,27 @@ int mouse_test(PFBDEV pFbdev)
             m_x += mevent.dx;
             m_y += mevent.dy;
             mouse_draw(pFbdev, m_x, m_y);
+
+            switch (mevent.button)
+            {
+            case 1:
+                printf("left button\n");
+                break;
+            case 2:
+                printf("right button\n");
+                break;
+            case 4:
+                printf("middle button\n");
+                break;
+            case 0:
+                printf("no button\n");
+                break;
+            default:
+                break;
+            }
         }
     }
 
+    close(fd);
     return 0;
 }
