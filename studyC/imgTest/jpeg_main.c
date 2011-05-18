@@ -51,7 +51,7 @@ int jpeg_main(const char *img_file)
     while (cinfo.output_scanline < cinfo.output_height) 
     {
         jpeg_read_scanlines(&cinfo, &buffer, 1);
-        memcpy((unsigned char *)fb_v.memo + y * fb_v.w * 4, buffer, cinfo.output_width * cinfo.output_components);
+        memcpy((unsigned char *)fb_v.memo + y * fb_v.w * fb_v.bpp / 8, buffer, cinfo.output_width * cinfo.output_components);
         y++;    //next scanline
     }
 
