@@ -58,7 +58,7 @@ int mouse_save(PFBDEV pFbdev, int x, int y)
     {
         for (i = 0; i < C_WIDTH; i++) 
         {
-            save_cursor[i + j * C_WIDTH] = *(u32_t *)(pFbdev->fb_mem + (x+i) + (y+j) * pFbdev->fb_var.xres);
+            save_cursor[i + j * C_WIDTH] = *((u32_t *)pFbdev->fb_mem + (x+i) + (y+j) * pFbdev->fb_var.xres);
         }
     }
     
@@ -138,7 +138,7 @@ int mouse_test(PFBDEV pFbdev)
                 printf("middle button\n");
                 break;
             case 0:
-                printf("no button\n");
+                // printf("no button\n");
                 break;
             default:
                 break;
