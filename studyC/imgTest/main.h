@@ -1,6 +1,7 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
+typedef unsigned char u8_t;
 typedef unsigned int u32_t;
 
 struct fbsrc_t
