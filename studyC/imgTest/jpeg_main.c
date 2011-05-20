@@ -87,8 +87,9 @@ int jpeg_main(const char *img_file)
     u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
     rgb24to32(buffer, buf);
 
-    //disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
-    disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
+    disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
+    //disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
+    //disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
 
     free(buf);
     // End of the TEST
@@ -103,11 +104,11 @@ int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, 
 {
     int i, j;
 
-    for (j = 0; j < jpeg_width; j++) 
+    for (i = 0; i < jpeg_width; i++) 
     {
-        for (i = 0; i < jpeg_height; i++) 
+        for (j = 0; j < jpeg_height; j++) 
         {
-            fb_one_pixel(j, i, buf[j + i * jpeg_width]);
+            fb_one_pixel(i, j, buf[i + j * jpeg_width]);
         }
         usleep(sleeptime);
     }
@@ -116,17 +117,34 @@ int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, 
 }
 
 int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
-{
+{/*{{{*/
     int i, j;
 
-    for (i = 0; i < jpeg_height; i++) 
+    for (j = 0; j < jpeg_height; j++) 
     {
-        for (j = 0; j < jpeg_width; j++) 
+        for (i = 0; i < jpeg_width; i++) 
         {
-            fb_one_pixel(j, i, buf[j + i * jpeg_width]);
+            fb_one_pixel(i, j, buf[i + j * jpeg_width]);
         }
         usleep(sleeptime);
     }
     
+    return 0;/*}}}*/
+}
+
+int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{
+    int i, j;
+    int times = 10;
+
+    for (i = 0; i < jpeg_width / times; i++) 
+    {
+        for (j = 0; j < jpeg_height / times; j++) 
+        {
+            fb_one_pixel(i, j, buf[i + j * jpeg_width]);
+        }
+        usleep(sleeptime);
+    }
+
     return 0;
 }
