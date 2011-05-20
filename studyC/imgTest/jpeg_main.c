@@ -9,11 +9,8 @@
 
 extern struct fbsrc_t fb_v;
 
-u32_t * rgb24to32(u8_t *buf24)
+int rgb24to32(u8_t *buf24, u32_t *buf)
 {
-    u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
-    if (buf == NULL) return NULL;
-
     /* FIXME: why? */
     int i;
     for(i = 0; i < fb_v.w * fb_v.h; i++)
@@ -24,7 +21,7 @@ u32_t * rgb24to32(u8_t *buf24)
         *((u8_t *)&buf[i] + 3) = 0x00;
     }   
 
-    return (u32_t *)buf;
+    return 0;
 }
 
 int jpeg_main(const char *img_file)
@@ -87,29 +84,49 @@ int jpeg_main(const char *img_file)
     jpeg_destroy_decompress(&cinfo);
 
     // the flow is only for TEST
-    u32_t *buf32 = rgb24to32(buffer);
-    int i, j;
-    //for(i = 0; i < cinfo.output_height; i++)
-    //{
-        //for (j = 0; j < cinfo.output_width; j++)
-        //{
-            //fb_one_pixel(j, i, buf32[j + i * cinfo.output_width]);
-        //}   
-        //usleep(10000);
-    //}
-    for (j = 0; j < cinfo.output_width; j++) 
-    {
-        for (i = 0; i < cinfo.output_height; i++) 
-        {
-            fb_one_pixel(j, i, buf32[j + i * cinfo.output_width]);
-        }
-        usleep(10000);
-    }
+    u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
+    rgb24to32(buffer, buf);
 
+    //disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
+    disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
+
+    free(buf);
     // End of the TEST
 
     free(buffer);
     fclose(infile);
     munmap(fb_v.memo, fb_v.w * fb_v.h * fb_v.bpp / 8);
+    return 0;
+}
+
+int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{
+    int i, j;
+
+    for (j = 0; j < jpeg_width; j++) 
+    {
+        for (i = 0; i < jpeg_height; i++) 
+        {
+            fb_one_pixel(j, i, buf[j + i * jpeg_width]);
+        }
+        usleep(sleeptime);
+    }
+    
+    return 0;
+}
+
+int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{
+    int i, j;
+
+    for (i = 0; i < jpeg_height; i++) 
+    {
+        for (j = 0; j < jpeg_width; j++) 
+        {
+            fb_one_pixel(j, i, buf[j + i * jpeg_width]);
+        }
+        usleep(sleeptime);
+    }
+    
     return 0;
 }
