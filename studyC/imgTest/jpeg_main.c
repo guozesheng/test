@@ -89,12 +89,20 @@ int jpeg_main(const char *img_file)
     // the flow is only for TEST
     u32_t *buf32 = rgb24to32(buffer);
     int i, j;
-    for(i = 0; i < cinfo.output_height; i++)
+    //for(i = 0; i < cinfo.output_height; i++)
+    //{
+        //for (j = 0; j < cinfo.output_width; j++)
+        //{
+            //fb_one_pixel(j, i, buf32[j + i * cinfo.output_width]);
+        //}   
+        //usleep(10000);
+    //}
+    for (j = 0; j < cinfo.output_width; j++) 
     {
-        for (j = 0; j < cinfo.output_width; j++)
+        for (i = 0; i < cinfo.output_height; i++) 
         {
             fb_one_pixel(j, i, buf32[j + i * cinfo.output_width]);
-        }   
+        }
         usleep(10000);
     }
 
