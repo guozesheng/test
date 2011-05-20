@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/mman.h>
+#include <unistd.h>
 #include "main.h"
 
 extern struct fbsrc_t fb_v;
@@ -94,6 +95,7 @@ int jpeg_main(const char *img_file)
         {
             fb_one_pixel(j, i, buf32[j + i * cinfo.output_width]);
         }   
+        usleep(10000);
     }
 
     // End of the TEST
