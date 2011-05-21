@@ -29,13 +29,7 @@ int font_disp(char c, int x, int y, u32_t color)
 
 int font_test(char *str, int x, int y, u32_t color)
 {
-    //char str[] = "Hello, world!";
-
-    //int x = 100;
-    //int y = 100;
     int font_w = 10;
-    //u32_t color = 0x0000ff00;
-    //char *p = str;
 
     while (*str != '\0') 
     {
