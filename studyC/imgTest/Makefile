@@ -1,7 +1,7 @@
 # This is for imgTest
 
 src = $(wildcard *.c)
-para = -o main -Wall -ljpeg
+para = -o main -Wall -ljpeg -lfreetype
 img = test.jpg
 
 main:$(src)

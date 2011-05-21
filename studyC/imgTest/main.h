@@ -27,5 +27,7 @@ int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, 
 int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
 int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
 int font_test(char *str, int x, int y, u32_t color);
+int init_ft (const char *file, int size);
+int display_string (const char * buf, int x, int y,u32_t color);
 
 #endif
