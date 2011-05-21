@@ -158,20 +158,20 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
         }
         usleep(sleeptime);
     }
-    for (i = 0; i < jpeg_width / times; i++) 
+    for (i = jpeg_width / times; i < jpeg_width / times * 2; i++) 
     {
-        for (j = 0; j < jpeg_height / times; j++) 
+        for (j = jpeg_height / times; j < jpeg_height / times * 2; j++) 
         {
-            for (l = 0; l < times; l += 2) 
+            for (l = 0; l < times - 1; l += 2) 
             {
-                for (k = 0; k < times; k += 2) 
+                for (k = 0; k < times - 1; k += 2) 
                 {
                     fb_one_pixel(i + jpeg_width / times * l, j + jpeg_height / times * k, buf[(i + jpeg_width / times * l) + (j + jpeg_height / times * k) * jpeg_width]);
                 }
             }
-            for (l = 1; l < times; l += 2) 
+            for (l = 1; l < times - 1; l += 2) 
             {
-                for (k = 1; k < times; k += 2) 
+                for (k = 1; k < times - 1; k += 2) 
                 {
                     fb_one_pixel(i + jpeg_width / times * l, j + jpeg_height / times * k, buf[(i + jpeg_width / times * l) + (j + jpeg_height / times * k) * jpeg_width]);
                 }
