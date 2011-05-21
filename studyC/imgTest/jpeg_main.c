@@ -87,16 +87,15 @@ int jpeg_main(const char *img_file)
     u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
     rgb24to32(buffer, buf);
 
-    disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
+    //disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
     //disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
-    //disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
+    disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
 
     free(buf);
     // End of the TEST
 
     free(buffer);
     fclose(infile);
-    munmap(fb_v.memo, fb_v.w * fb_v.h * fb_v.bpp / 8);
     return 0;
 }
 
@@ -142,6 +141,7 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
         for (j = 0; j < jpeg_height / times; j++) 
         {
             fb_one_pixel(i, j, buf[i + j * jpeg_width]);
+            fb_one_pixel(i, j + jpeg_height / times * 2, buf[i + (j + jpeg_height / times * 2) * jpeg_width]);
         }
         usleep(sleeptime);
     }
