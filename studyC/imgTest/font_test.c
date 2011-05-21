@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <unistd.h>
 #include "main.h"
 
 extern const unsigned char fontdata_8x16[FONTDATAMAX];
@@ -36,6 +37,7 @@ int font_test(char *str, int x, int y, u32_t color)
         font_disp(*str, x, y, color);
         str++;
         x += font_w;
+        usleep(100000);
     }
     
     return 0;

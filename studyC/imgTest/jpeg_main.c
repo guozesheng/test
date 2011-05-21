@@ -135,13 +135,47 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
 {
     int i, j;
     int times = 10;
+    int k, l;
 
     for (i = 0; i < jpeg_width / times; i++) 
     {
         for (j = 0; j < jpeg_height / times; j++) 
         {
-            fb_one_pixel(i, j, buf[i + j * jpeg_width]);
-            fb_one_pixel(i, j + jpeg_height / times * 2, buf[i + (j + jpeg_height / times * 2) * jpeg_width]);
+            for (l = 0; l < times; l += 2) 
+            {
+                for (k = 0; k < times; k += 2) 
+                {
+                    fb_one_pixel(i + jpeg_width / times * l, j + jpeg_height / times * k, buf[(i + jpeg_width / times * l) + (j + jpeg_height / times * k) * jpeg_width]);
+                }
+            }
+            for (l = 1; l < times; l += 2) 
+            {
+                for (k = 1; k < times; k += 2) 
+                {
+                    fb_one_pixel(i + jpeg_width / times * l, j + jpeg_height / times * k, buf[(i + jpeg_width / times * l) + (j + jpeg_height / times * k) * jpeg_width]);
+                }
+            }
+        }
+        usleep(sleeptime);
+    }
+    for (i = 0; i < jpeg_width / times; i++) 
+    {
+        for (j = 0; j < jpeg_height / times; j++) 
+        {
+            for (l = 0; l < times; l += 2) 
+            {
+                for (k = 0; k < times; k += 2) 
+                {
+                    fb_one_pixel(i + jpeg_width / times * l, j + jpeg_height / times * k, buf[(i + jpeg_width / times * l) + (j + jpeg_height / times * k) * jpeg_width]);
+                }
+            }
+            for (l = 1; l < times; l += 2) 
+            {
+                for (k = 1; k < times; k += 2) 
+                {
+                    fb_one_pixel(i + jpeg_width / times * l, j + jpeg_height / times * k, buf[(i + jpeg_width / times * l) + (j + jpeg_height / times * k) * jpeg_width]);
+                }
+            }
         }
         usleep(sleeptime);
     }
