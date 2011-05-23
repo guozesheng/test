@@ -91,7 +91,7 @@ int jpeg_main(const char *img_file)
     //disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
     //disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
     //disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
-    disp_uptodown_line(buf, cinfo.output_width, cinfo.output_height, 1);
+    disp_uptodown_line(buf, cinfo.output_width, cinfo.output_height, 10000);
 
     free(buf);
     // End of the TEST
