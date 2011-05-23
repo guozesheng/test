@@ -5,6 +5,7 @@
 #include <string.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <time.h>
 #include "main.h"
 
 extern struct fbsrc_t fb_v;
@@ -89,7 +90,8 @@ int jpeg_main(const char *img_file)
 
     //disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
     //disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
-    disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
+    //disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
+    disp_uptodown_line(buf, cinfo.output_width, cinfo.output_height, 1);
 
     free(buf);
     // End of the TEST
@@ -97,6 +99,21 @@ int jpeg_main(const char *img_file)
     free(buffer);
     fclose(infile);
     return 0;
+}
+
+int disp_show(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
+{/*{{{*/
+    int i, j;
+
+    for (j = 0; j < jpeg_height; j++) 
+    {
+        for (i = 0; i < jpeg_width; i++) 
+        {
+            fb_one_pixel(i, j, buf[i + j * jpeg_width]);
+        }
+    }
+    
+    return 0;/*}}}*/
 }
 
 int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
@@ -131,8 +148,36 @@ int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int
     return 0;/*}}}*/
 }
 
-int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+int disp_uptodown_line(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
 {
+    int i, j, k;
+    int rand_line;
+    int line_bord = 3;
+
+    srand(time(NULL));
+
+    for (j = 0; j < jpeg_height; j++) 
+    {
+        rand_line = rand() % (jpeg_height - line_bord);
+        for (k = 0; k < line_bord; k++) 
+        {
+            for (i = 0; i < jpeg_width; i++) 
+            {
+                fb_one_pixel(i, rand_line + k, buf[i + (rand_line + k) * jpeg_width]);
+            }
+        }
+        if (j % 10 == 0) 
+        {
+            usleep(sleeptime);
+        }
+    }
+    disp_show(buf, jpeg_width, jpeg_height);
+    
+    return 0;
+}
+
+int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{/*{{{*/
     int i, j;
     int times = 10;
     int k, l;
@@ -171,5 +216,5 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
         usleep(sleeptime);
     }
 
-    return 0;
+    return 0;/*}}}*/
 }
