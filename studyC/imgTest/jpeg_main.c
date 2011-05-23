@@ -158,7 +158,8 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
         }
         usleep(sleeptime);
     }
-    for (i = jpeg_width / times; i < jpeg_width / times * 2; i++) 
+    //for (i = jpeg_width / times; i < jpeg_width / times * 2; i++) 
+    for (i = 0; i < jpeg_width / times; i++) 
     {
         for (j = jpeg_height / times; j < jpeg_height / times * 2; j++) 
         {
