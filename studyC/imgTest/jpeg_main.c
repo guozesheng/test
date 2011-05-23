@@ -153,6 +153,7 @@ int disp_uptodown_line(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height
     int i, j, k;
     int rand_line;
     int line_bord = 3;
+    int sleep_space = 10;
 
     srand(time(NULL));
 
@@ -166,7 +167,7 @@ int disp_uptodown_line(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height
                 fb_one_pixel(i, rand_line + k, buf[i + (rand_line + k) * jpeg_width]);
             }
         }
-        if (j % 10 == 0) 
+        if (j % sleep_space == 0) 
         {
             usleep(sleeptime);
         }
