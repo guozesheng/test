@@ -88,9 +88,18 @@ int jpeg_main(const char *img_file)
     u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
     rgb24to32(buffer, buf);
 
-    //disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10000);
-    //disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
-    //disp_scroll(buf, cinfo.output_width, cinfo.output_height, 1000);
+    disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 1000);
+    usleep(1000000);
+    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+    usleep(100000);
+    disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
+    usleep(1000000);
+    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+    usleep(100000);
+    disp_scroll(buf, cinfo.output_width, cinfo.output_height, 10000);
+    usleep(1000000);
+    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+    usleep(100000);
     disp_uptodown_line(buf, cinfo.output_width, cinfo.output_height, 10000);
 
     free(buf);
