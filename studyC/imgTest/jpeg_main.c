@@ -217,11 +217,11 @@ int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
 
     for (x_m = jpeg_width / 2, y_m = jpeg_height /2; x_m < jpeg_width; x_m += incmx, y_m += incmy) 
     {
-        spin_drawline(buf, x_m, 0, jpeg_width - x_m, jpeg_height, jpeg_width, jpeg_height);
-        spin_drawline(buf, x_m - jpeg_width / 2, 0, jpeg_width * 3 / 2 - x_m, jpeg_height, jpeg_width, jpeg_height);
+        spin_drawline(buf, x_m, 0, jpeg_width - x_m, jpeg_height - 1, jpeg_width, jpeg_height);
+        spin_drawline(buf, x_m - jpeg_width / 2, 0, jpeg_width * 3 / 2 - x_m, jpeg_height - 1, jpeg_width, jpeg_height);
 
-        spin_drawline(buf, 0, jpeg_height - y_m, jpeg_width, y_m, jpeg_width, jpeg_height);
-        spin_drawline(buf, 0, jpeg_height * 3 / 2 - y_m, jpeg_width, y_m - jpeg_height / 2, jpeg_width, jpeg_height);
+        spin_drawline(buf, 0, jpeg_height - y_m, jpeg_width - 1, y_m, jpeg_width, jpeg_height);
+        spin_drawline(buf, 0, jpeg_height * 3 / 2 - y_m, jpeg_width - 1, y_m - jpeg_height / 2, jpeg_width, jpeg_height);
 
         usleep(sleeptime);
     }
@@ -390,7 +390,7 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
 }
 
 int disp_fade(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
-{
+{/*{{{*/
     int i, j;
     int i_tag, j_tag;
 
@@ -409,5 +409,5 @@ int disp_fade(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sle
         }
     }
     
-    return 0;
+    return 0;/*}}}*/
 }
