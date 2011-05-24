@@ -88,6 +88,9 @@ int jpeg_main(const char *img_file)
     u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
     rgb24to32(buffer, buf);
 
+    disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 1000);
+    usleep(1000000);
+    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
     disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 1000);
     usleep(1000000);
     memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
@@ -110,6 +113,66 @@ int jpeg_main(const char *img_file)
     return 0;
 }
 
+int spin_drawline(u32_t *buf, int x1, int y1, int x2, int y2, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
+{
+    int i;
+    int x, xe, y, ye;
+    float a;
+    float b;
+
+    if (x1 == x2) 
+    {
+        y = (y1 < y2 ) ? y1 : y2;
+        ye = (y1 < y2 ) ? y2 : y1;
+        for (i = y; i < ye; i++) 
+        {
+            fb_one_pixel(x1, i, buf[x1 + i * jpeg_width]);
+        }
+        return 0;
+    }
+
+    a = (y2 - y1) / (float)(x2 - x1);
+    b = y1 - a * x1;
+
+    if (a <= 0) 
+    {
+        x = (x1 < x2) ? x1 : x2;
+        xe = (x1 < x2) ? x2 : x1;
+        for (i = x; i < xe; i++) 
+        {
+            y = (((int)((a * i + b) * 10) % 10) > 4) ? (a * i + b + 1) : (a * i + b);
+            fb_one_pixel(i, y, buf[i + y * jpeg_width]);
+        }
+    }
+    else
+    {
+        y = (y1 < y2 ) ? y1 : y2;
+        ye = (y1 < y2 ) ? y2 : y1;
+        for (i = y; i < ye; i++) 
+        {
+            x = (((int)(((i - b) / a) * 10) % 10) > 4) ? ((i - b) / a + 1) : ((i - b) / a);
+            fb_one_pixel(x, i, buf[x + i * jpeg_width]);
+        }
+    }
+    
+    return 0;
+}
+
+int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{
+    int x0 = jpeg_width / 2;
+    int y0 = jpeg_height / 2;
+    int x_w;
+
+    for (x_w = x0; x_w < jpeg_width; x_w++) 
+    {
+        // draw line (x0, y0), (x_w++, 0)
+        spin_drawline(buf, x0, y0, x_w, 0, jpeg_width, jpeg_height);
+    }
+
+    return 0;
+}
+
 int disp_show(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
 {/*{{{*/
     int i, j;
@@ -126,7 +189,7 @@ int disp_show(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
 }
 
 int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
-{
+{/*{{{*/
     int i, j;
 
     for (i = 0; i < jpeg_width; i++) 
@@ -138,7 +201,7 @@ int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, 
         usleep(sleeptime);
     }
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
@@ -158,7 +221,7 @@ int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int
 }
 
 int disp_uptodown_line(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
-{
+{/*{{{*/
     int i, j, k;
     int rand_line;
     int line_bord = 3;
@@ -183,7 +246,7 @@ int disp_uptodown_line(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height
     }
     disp_show(buf, jpeg_width, jpeg_height);
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)

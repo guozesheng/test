@@ -31,5 +31,6 @@ int font_test(char *str, int x, int y, u32_t color);
 int init_ft (const char *file, int size);
 int display_string (const char * buf, int x, int y,u32_t color);
 int disp_uptodown_line(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
+int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
 
 #endif
