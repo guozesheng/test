@@ -88,6 +88,14 @@ int jpeg_main(const char *img_file)
     u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
     rgb24to32(buffer, buf);
 
+    // The move is very slow!!
+    //disp_lefttoright_move(buf, cinfo.output_width, cinfo.output_height, 0);
+    //usleep(1000000);
+    //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+    //disp_uptodown_move(buf, cinfo.output_width, cinfo.output_height, 0);
+    //usleep(1000000);
+    //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+    
     disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 1000);
     usleep(1000000);
     memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
@@ -114,14 +122,14 @@ int jpeg_main(const char *img_file)
 }
 
 void spin_swap(int *a, int *b)
-{
+{/*{{{*/
     int temp = *a;
     *a = *b;
-    *b = temp;
+    *b = temp;/*}}}*/
 }
 
 int spin_drawline(u32_t *buf, int x1, int y1, int x2, int y2, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
-{
+{/*{{{*/
     int dx = x2 - x1;
     int dy = y2 - y1;
     int p = 0;
@@ -184,11 +192,11 @@ int spin_drawline(u32_t *buf, int x1, int y1, int x2, int y2, JDIMENSION jpeg_wi
         }
     }
     
-    return 0;
+    return 0;/*}}}*/
 }
 
 int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
-{
+{/*{{{*/
     float x_m;
     float y_m;
     float incmx, incmy;
@@ -215,7 +223,7 @@ int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
         usleep(sleeptime);
     }
 
-    return 0;
+    return 0;/*}}}*/
 }
 
 int disp_show(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
@@ -249,6 +257,27 @@ int disp_lefttoright(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, 
     return 0;/*}}}*/
 }
 
+int disp_lefttoright_move(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{/*{{{*/
+    int i, j, k;
+    int temp;
+
+    for (i = 0; i < jpeg_width; i++) 
+    {
+        for (k = 0; k < i; k++) 
+        {
+            temp = jpeg_width - i + k;
+            for (j = 0; j < jpeg_height; j++) 
+            {
+                fb_one_pixel(k, j, buf[temp + j * jpeg_width]);
+            }
+        }
+        //usleep(sleeptime);
+    }
+    
+    return 0;/*}}}*/
+}
+
 int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
 {/*{{{*/
     int i, j;
@@ -258,6 +287,26 @@ int disp_uptodown(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int
         for (i = 0; i < jpeg_width; i++) 
         {
             fb_one_pixel(i, j, buf[i + j * jpeg_width]);
+        }
+        usleep(sleeptime);
+    }
+    
+    return 0;/*}}}*/
+}
+
+int disp_uptodown_move(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{/*{{{*/
+    int i, j, k, temp;
+
+    for (j = 0; j < jpeg_height; j++) 
+    {
+        for (k = 0; k < j; k++) 
+        {
+            temp = (jpeg_height - j + k) * jpeg_width;
+            for (i = 0; i < jpeg_width; i++) 
+            {
+                fb_one_pixel(i, k, buf[i + temp]);
+            }
         }
         usleep(sleeptime);
     }
