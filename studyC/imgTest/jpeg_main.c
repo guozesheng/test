@@ -96,6 +96,9 @@ int jpeg_main(const char *img_file)
     //usleep(1000000);
     //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
     
+    disp_fade(buf, cinfo.output_width, cinfo.output_height, 10000);
+    usleep(1000000);
+    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
     disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 1000);
     usleep(1000000);
     memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
@@ -384,4 +387,27 @@ int disp_scroll(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
     }
 
     return 0;/*}}}*/
+}
+
+int disp_fade(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
+{
+    int i, j;
+    int i_tag, j_tag;
+
+    for (i_tag = 0; i_tag < 3; i_tag++) 
+    {
+        for (j_tag = 0; j_tag < 3; j_tag++) 
+        {
+            for (j = i_tag; j < jpeg_height; j += 3) 
+            {
+                for (i = j_tag; i < jpeg_width; i += 3) 
+                {
+                    fb_one_pixel(i, j, buf[i + j * jpeg_width]);
+                }
+            }
+            usleep(sleeptime);
+        }
+    }
+    
+    return 0;
 }
