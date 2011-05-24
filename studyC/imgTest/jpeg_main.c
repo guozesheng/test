@@ -113,45 +113,74 @@ int jpeg_main(const char *img_file)
     return 0;
 }
 
+void spin_swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
 int spin_drawline(u32_t *buf, int x1, int y1, int x2, int y2, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
 {
-    int i;
-    int x, xe, y, ye;
-    float a;
-    float b;
+    int dx = x2 - x1;
+    int dy = y2 - y1;
+    int p = 0;
+    int inc = (dx * dy < 0) ? -1 : 1;
 
-    if (x1 == x2) 
+    if (abs(dx) > abs(dy)) 
     {
-        y = (y1 < y2 ) ? y1 : y2;
-        ye = (y1 < y2 ) ? y2 : y1;
-        for (i = y; i < ye; i++) 
+        if (dx < 0) 
         {
-            fb_one_pixel(x1, i, buf[x1 + i * jpeg_width]);
+            spin_swap(&x1, &x2);
+            spin_swap(&y1, &y2);
+            dx = -dx;
+            dy = -dy;
         }
-        return 0;
-    }
+        
+        dy = abs(dy);
+        p = 2 * dy -dx;
 
-    a = (y2 - y1) / (float)(x2 - x1);
-    b = y1 - a * x1;
-
-    if (a <= 0) 
-    {
-        x = (x1 < x2) ? x1 : x2;
-        xe = (x1 < x2) ? x2 : x1;
-        for (i = x; i < xe; i++) 
+        while (x1 <= x2) 
         {
-            y = (((int)((a * i + b) * 10) % 10) > 4) ? (a * i + b + 1) : (a * i + b);
-            fb_one_pixel(i, y, buf[i + y * jpeg_width]);
+            fb_one_pixel(x1, y1, buf[x1 + y1 * jpeg_width]);
+            x1++;
+            if (p < 0) 
+            {
+                p += 2 * dy;
+            }
+            else 
+            {
+                y1 += inc;
+                p += 2 * (dy - dx);
+            }
         }
     }
-    else
+    else 
     {
-        y = (y1 < y2 ) ? y1 : y2;
-        ye = (y1 < y2 ) ? y2 : y1;
-        for (i = y; i < ye; i++) 
+        if (dy < 0) 
         {
-            x = (((int)(((i - b) / a) * 10) % 10) > 4) ? ((i - b) / a + 1) : ((i - b) / a);
-            fb_one_pixel(x, i, buf[x + i * jpeg_width]);
+            spin_swap(&x1, &x2);
+            spin_swap(&y1, &y2);
+            dx = -dx;
+            dy = -dy;
+        }
+        
+        dx = abs(dx);
+        p = 2 * dx - dy;
+
+        while (y1 <= y2) 
+        {
+            fb_one_pixel(x1, y1, buf[x1 + y1 * jpeg_width]);
+            y1++;
+            if (p < 0) 
+            {
+                p += 2 * dx;
+            }
+            else 
+            {
+                x1 += inc;
+                p += 2 * (dx - dy);
+            }
         }
     }
     
@@ -160,14 +189,19 @@ int spin_drawline(u32_t *buf, int x1, int y1, int x2, int y2, JDIMENSION jpeg_wi
 
 int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
 {
-    int x0 = jpeg_width / 2;
-    int y0 = jpeg_height / 2;
-    int x_w;
+    int x_m;
+    float y_m;
+    float incm = (float)jpeg_height / (float)jpeg_width;
 
-    for (x_w = x0; x_w < jpeg_width; x_w++) 
+    for (x_m = jpeg_width / 2, y_m = jpeg_height /2; x_m < jpeg_width; x_m++, y_m += incm) 
     {
-        // draw line (x0, y0), (x_w++, 0)
-        spin_drawline(buf, x0, y0, x_w, 0, jpeg_width, jpeg_height);
+        spin_drawline(buf, x_m, 0, jpeg_width - x_m, jpeg_height, jpeg_width, jpeg_height);
+        spin_drawline(buf, x_m - jpeg_width / 2, 0, jpeg_width * 3 / 2 - x_m, jpeg_height, jpeg_width, jpeg_height);
+
+        spin_drawline(buf, 0, jpeg_height - y_m, jpeg_width, y_m, jpeg_width, jpeg_height);
+        spin_drawline(buf, 0, jpeg_height * 3 / 2 - y_m, jpeg_width, y_m - jpeg_height / 2, jpeg_width, jpeg_height);
+
+        usleep(sleeptime);
     }
 
     return 0;
