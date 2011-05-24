@@ -189,11 +189,22 @@ int spin_drawline(u32_t *buf, int x1, int y1, int x2, int y2, JDIMENSION jpeg_wi
 
 int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime)
 {
-    int x_m;
+    float x_m;
     float y_m;
-    float incm = (float)jpeg_height / (float)jpeg_width;
+    float incmx, incmy;
 
-    for (x_m = jpeg_width / 2, y_m = jpeg_height /2; x_m < jpeg_width; x_m++, y_m += incm) 
+    if (jpeg_height <= jpeg_width) 
+    {
+        incmx = 1;
+        incmy = (float)jpeg_height / (float)jpeg_width;
+    }
+    else 
+    {
+        incmy = 1;
+        incmx = (float)jpeg_width / (float)jpeg_height;
+    }
+
+    for (x_m = jpeg_width / 2, y_m = jpeg_height /2; x_m < jpeg_width; x_m += incmx, y_m += incmy) 
     {
         spin_drawline(buf, x_m, 0, jpeg_width - x_m, jpeg_height, jpeg_width, jpeg_height);
         spin_drawline(buf, x_m - jpeg_width / 2, 0, jpeg_width * 3 / 2 - x_m, jpeg_height, jpeg_width, jpeg_height);
