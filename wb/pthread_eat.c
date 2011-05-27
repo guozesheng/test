@@ -50,8 +50,23 @@ int main(int argc, const char *argv[])
 
 void pickup(int me)
 {
+#if 0
     pthread_mutex_lock(&chopstick[L(me)]);
     pthread_mutex_lock(&chopstick[R(me)]);
+#endif
+
+#if 1
+    if (me % N == 0) 
+    {
+        pthread_mutex_lock(&chopstick[R(me)]);
+        pthread_mutex_lock(&chopstick[L(me)]);
+    }
+    else 
+    {
+        pthread_mutex_lock(&chopstick[L(me)]);
+        pthread_mutex_lock(&chopstick[R(me)]);
+    }
+#endif
 }
 
 void drop(int me)

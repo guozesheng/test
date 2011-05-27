@@ -60,7 +60,7 @@ void *producer(void *p)
         //head = mp;
         pthread_mutex_unlock(&lock);
         pthread_cond_signal(&has_product);
-        sleep(rand() % 5);
+        usleep(rand() % 5);
     }
 }
 
@@ -76,10 +76,17 @@ void *consumer(void *p)
             pthread_cond_wait(&has_product, &lock);
         }
         mp = head;
-        head = mp->next;
+        if (head->next == mp) 
+        {
+            head = NULL;
+        }
+        else 
+        {
+            head = mp->next;
+        }
         pthread_mutex_unlock(&lock);
         printf("Consume %d\n", mp->num);
         free(mp);
-        sleep(rand() % 5);
+        usleep(rand() % 5);
     }
 }
