@@ -13,8 +13,9 @@ int main(int argc, const char *argv[])
         return -1;
     }
 
-    draw_pixel(fbdev, 500, 500, 0x0000ff00);
+    draw_pixel(&fbdev, 500, 500, 0x0000ff00);
+    mouse_main(&fbdev);
     
-    fb_destroy(fbdev);
+    fb_destroy(&fbdev);
     return 0;
 }

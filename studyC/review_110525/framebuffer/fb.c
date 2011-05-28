@@ -27,12 +27,12 @@ int fb_init(PFBDEV pFbdev)
     return 0;
 }
 
-int fb_destroy(FBDEV fbdev)
+int fb_destroy(PFBDEV pfbdev)
 {
-    close(fbdev.fb);
-    fbdev.fb = -1;
+    close(pfbdev->fb);
+    pfbdev->fb = -1;
 
-    munmap(fbdev.memo, fbdev.fb_var.xres * fbdev.fb_var.yres * fbdev.fb_var.bits_per_pixel / 8);
+    munmap(pfbdev->memo, pfbdev->fb_var.xres * pfbdev->fb_var.yres * pfbdev->fb_var.bits_per_pixel / 8);
     
     return 0;
 }

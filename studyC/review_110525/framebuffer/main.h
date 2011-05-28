@@ -13,9 +13,19 @@ typedef struct fbdev
     char dev[20];
 } FBDEV, *PFBDEV;
 
+typedef struct mevent
+{
+    int dx;
+    int dy;
+    int dz;
+
+    int button;
+} MEVENT;
+
 int fb_init(PFBDEV pFbdev);
-int fb_destroy(FBDEV fbdev);
+int fb_destroy(PFBDEV pfbdev);
 int fb_memset(void *addr, int c, size_t len);
-int draw_pixel(FBDEV fbdev, int x, int y, u32_t color);
+int draw_pixel(PFBDEV pfbdev, int x, int y, u32_t color);
+int mouse_main(PFBDEV pfbdev);
 
 #endif
