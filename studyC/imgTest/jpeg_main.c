@@ -25,6 +25,35 @@ int rgb24to32(u8_t *buf24, u32_t *buf)
     return 0;
 }
 
+int rgb24to16(u8_t *buf24, u16_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
+{
+    //u16_t *buf16 = NULL;
+	
+	u32_t r24,g24,b24;
+	u32_t r16,g16,b16;
+	u16_t rgb16;
+	int i;
+
+	//if ((buf16 = malloc (jpeg_inf.w * jpeg_inf.h * 2)) == NULL)
+		//return -1;
+
+	for (i = 0 ;i < jpeg_width * jpeg_height ; i++)	{
+
+		r24 = buf24[i * 3 + 0];
+		g24 = buf24[i * 3 + 1];
+		b24 = buf24[i * 3 + 2];	
+
+		b16 = (b24 * 0x1f) / 0xff;
+		g16 = (g24 * 0x3f) / 0xff;
+		r16 = (r24 * 0x1f) / 0xff;
+	
+		rgb16 = b16 | (g16 <<5) | (r16 <<11);
+	
+		buf[i] = rgb16;
+	}
+	return 0;
+}
+
 int jpeg_main(const char *img_file)
 {
     struct jpeg_decompress_struct cinfo;
@@ -85,38 +114,42 @@ int jpeg_main(const char *img_file)
     jpeg_destroy_decompress(&cinfo);
 
     // the flow is only for TEST
-    u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
-    rgb24to32(buffer, buf);
+    if (fb_v.bpp == 32) 
+    {
+        u32_t *buf = malloc(fb_v.w * fb_v.h * fb_v.bpp / 8); 
+        rgb24to32(buffer, buf);
 
-    // The move is very slow!!
-    //disp_lefttoright_move(buf, cinfo.output_width, cinfo.output_height, 0);
-    //usleep(1000000);
-    //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    //disp_uptodown_move(buf, cinfo.output_width, cinfo.output_height, 0);
-    //usleep(1000000);
-    //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    
-    disp_fade(buf, cinfo.output_width, cinfo.output_height, 10000);
-    usleep(1000000);
-    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 1000);
-    usleep(1000000);
-    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 1000);
-    usleep(1000000);
-    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    usleep(100000);
-    disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
-    usleep(1000000);
-    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    usleep(100000);
-    disp_scroll(buf, cinfo.output_width, cinfo.output_height, 10000);
-    usleep(1000000);
-    memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-    usleep(100000);
-    disp_uptodown_line(buf, cinfo.output_width, cinfo.output_height, 10000);
+        // The move is very slow!!
+        //disp_lefttoright_move(buf, cinfo.output_width, cinfo.output_height, 0);
+        //usleep(1000000);
+        //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        //disp_uptodown_move(buf, cinfo.output_width, cinfo.output_height, 0);
+        //usleep(1000000);
+        //memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        
+        disp_fade(buf, cinfo.output_width, cinfo.output_height, 10000);
+        usleep(1000000);
+        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 1000);
+        usleep(1000000);
+        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 1000);
+        usleep(1000000);
+        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        usleep(100000);
+        disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
+        usleep(1000000);
+        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        usleep(100000);
+        disp_scroll(buf, cinfo.output_width, cinfo.output_height, 10000);
+        usleep(1000000);
+        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        usleep(100000);
+        disp_uptodown_line(buf, cinfo.output_width, cinfo.output_height, 10000);
 
-    free(buf);
+        free(buf);
+    }
+
     // End of the TEST
 
     free(buffer);
