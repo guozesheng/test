@@ -63,6 +63,11 @@ int mouse_main(PFBDEV pfbdev)
 
             m_x += mevent.dx;
             m_y += mevent.dy;
+            m_x = (m_x < 0) ? 0 : m_x;
+            m_y = (m_y < 0) ? 0 : m_y;
+            m_x = (m_x > pfbdev->fb_var.xres - C_WIDTH) ? pfbdev->fb_var.xres - C_WIDTH : m_x;
+            m_y = (m_y > pfbdev->fb_var.yres - C_HEIGHT) ? pfbdev->fb_var.yres - C_HEIGHT : m_y;
+
             mouse_draw(pfbdev, m_x, m_y);
             switch (mevent.button)
             {
@@ -108,7 +113,7 @@ int mouse_save(PFBDEV pfbdev, int x, int y)
     {
         for (i = 0; i < C_WIDTH; i++) 
         {
-            cursor_save[i + j * C_WIDTH] = *((u32_t *)(pfbdev->memo + (x+i) + (y+j)*pfbdev->fb_var.xres));
+            cursor_save[i + j * C_WIDTH] = *((u32_t *)pfbdev->memo + (x+i) + (y+j)*pfbdev->fb_var.xres);
         }
     }
     

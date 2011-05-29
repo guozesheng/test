@@ -130,18 +130,18 @@ int jpeg_main(const char *img_file)
         disp_fade(buf, cinfo.output_width, cinfo.output_height, 10000);
         usleep(1000000);
         memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-        disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 1000);
+        disp_spin_8(buf, cinfo.output_width, cinfo.output_height, 10);
         usleep(1000000);
         memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-        disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 1000);
-        usleep(1000000);
-        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
-        usleep(100000);
-        disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 1000);
+        disp_lefttoright(buf, cinfo.output_width, cinfo.output_height, 10);
         usleep(1000000);
         memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
         usleep(100000);
-        disp_scroll(buf, cinfo.output_width, cinfo.output_height, 10000);
+        disp_uptodown(buf, cinfo.output_width, cinfo.output_height, 10);
+        usleep(1000000);
+        memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
+        usleep(100000);
+        disp_scroll(buf, cinfo.output_width, cinfo.output_height, 100);
         usleep(1000000);
         memset((u32_t *)fb_v.memo, 0, fb_v.h * fb_v.w * fb_v.bpp / 8);
         usleep(100000);
@@ -154,6 +154,11 @@ int jpeg_main(const char *img_file)
 
     free(buffer);
     fclose(infile);
+    return 0;
+}
+
+int jpeg_scale(u32_t *buf, int x, int y, int w, int h, JDIMENSION jpeg_width, JDIMENSION jpeg_height)
+{
     return 0;
 }
 

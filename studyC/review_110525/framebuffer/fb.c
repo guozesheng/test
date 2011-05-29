@@ -40,4 +40,6 @@ int fb_destroy(PFBDEV pfbdev)
 int fb_memset(void *addr, int c, size_t len)
 {
     memset(addr, c, len);
+
+    return 0;
 }
