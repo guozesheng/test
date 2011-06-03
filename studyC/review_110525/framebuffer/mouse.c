@@ -32,6 +32,7 @@ static u32_t cursor_pixel[C_WIDTH * C_HEIGHT] =
     T___,T___,T___,T___,T___,T___,BORD,BORD,T___,T___
 };/*}}}*/
 static u32_t cursor_save[C_WIDTH * C_HEIGHT] = {0};
+int mouse_loop = 1;
 
 int mouse_draw(PFBDEV pfbdev, int x, int y);
 int mouse_parse(int fd, MEVENT *pmevent);
@@ -55,7 +56,7 @@ int mouse_main(PFBDEV pfbdev)
 
     mouse_draw(pfbdev, m_x, m_y);
 
-    while (1) 
+    while (mouse_loop) 
     {
         if (mouse_parse(fd, &mevent) == 0) 
         {
@@ -73,6 +74,10 @@ int mouse_main(PFBDEV pfbdev)
             {
                 case 1:
                     printf("Left click!\n");
+                    if (m_x>200 && m_x<230 && m_y>200 && m_y<300) 
+                    {
+                        mouse_loop = 0;
+                    }
                     break;
                 case 2:
                     printf("Right click!\n");

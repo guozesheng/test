@@ -22,6 +22,18 @@ typedef struct mevent
     int button;
 } MEVENT;
 
+typedef struct mousevent
+{
+    int x;
+    int y;
+    int h;
+    int w;
+
+    void (*function)(void *, ...);
+
+    struct mousevent *next;
+} MOUSEVENT, *PMOUSEVENT;
+
 int fb_init(PFBDEV pFbdev);
 int fb_destroy(PFBDEV pfbdev);
 int fb_memset(void *addr, int c, size_t len);

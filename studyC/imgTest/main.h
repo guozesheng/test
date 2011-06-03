@@ -35,5 +35,6 @@ int disp_spin_8(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int s
 int disp_uptodown_move(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
 int disp_lefttoright_move(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
 int disp_fade(u32_t *buf, JDIMENSION jpeg_width, JDIMENSION jpeg_height, int sleeptime);
+int jpeg_scale(u32_t *buf, int x, int y, int w, int h, JDIMENSION jpeg_width, JDIMENSION jpeg_height);
 
 #endif
