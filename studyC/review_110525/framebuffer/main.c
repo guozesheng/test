@@ -4,14 +4,14 @@
 
 int main(int argc, const char *argv[])
 {
-    //FBDEV fbdev;
+    FBDEV fbdev;
 
-    //strcpy(fbdev.dev, "/dev/fb0");
+    strcpy(fbdev.dev, "/dev/fb0");
 
-    //if (fb_init(&fbdev) == -1)
-    //{
-        //return -1;
-    //}
+    if (fb_init(&fbdev) == -1)
+    {
+        return -1;
+    }
 
     ////test
     //int i, j;
@@ -26,9 +26,9 @@ int main(int argc, const char *argv[])
     ////end test
 
     //draw_pixel(&fbdev, 500, 500, 0x0000ff00);
-    //mouse_main(&fbdev);
+    mouse_main(&fbdev);
     
-    //fb_destroy(&fbdev);
+    fb_destroy(&fbdev);
     //fun_test();
     return 0;
 }

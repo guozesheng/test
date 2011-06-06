@@ -42,6 +42,7 @@ int mouse_restore(PFBDEV pfbdev, int x, int y);
 int mouse_main(PFBDEV pfbdev)
 {
     int fd;
+    int mouse_flag = 0;
 
     fd = open("/dev/input/mice", O_RDONLY | O_NONBLOCK);
     if (fd < 0) 
@@ -72,18 +73,36 @@ int mouse_main(PFBDEV pfbdev)
             mouse_draw(pfbdev, m_x, m_y);
             switch (mevent.button)
             {
-                case 1:
-                    printf("Left click!\n");
-                    if (m_x>200 && m_x<230 && m_y>200 && m_y<300) 
+                case 0:
+                    switch (mouse_flag)
                     {
-                        mouse_loop = 0;
+                        case 1:
+                            printf("Left click!\n");
+                            if (m_x>200 && m_x<230 && m_y>200 && m_y<300) 
+                            {
+                                mouse_loop = 0;
+                            }
+                            break;
+                        case 2:
+                            printf("Right click!\n");
+                            break;
+                        case 4:
+                            printf("middle click!\n");
+                            break;
+                        default:
+                            mouse_flag = 0;
+                            break;
                     }
+                    mouse_flag = 0;
+                    break;
+                case 1:
+                    mouse_flag = 1;
                     break;
                 case 2:
-                    printf("Right click!\n");
+                    mouse_flag = 2;
                     break;
                 case 4:
-                    printf("middle click!\n");
+                    mouse_flag = 4;
                     break;
                 default: break;
             }
