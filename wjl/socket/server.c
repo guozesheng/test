@@ -64,15 +64,13 @@ int main(int argc, const char *argv[])
                 }
                 my_write(connfd, buf, n);
             }
-            close(connfd);
+            my_close(connfd);
             exit(0);
         }
         else 
         {
             my_close(connfd);
         }
-
-
     }
 
     return 0;
