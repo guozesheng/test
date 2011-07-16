@@ -13,17 +13,19 @@
 
 int main(int argc, const char *argv[])
 {
-    char *str;
+    //char *str;
     int sockfd, n;
     struct sockaddr_in servaddr;
     char buf[MAXLINE];
 
+#if 0
     if (argc != 2) 
     {
         fputs("usage: ./client message\n", stderr);
         exit(1);
     }
     str = (char *)argv[1];
+#endif
 
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -34,11 +36,20 @@ int main(int argc, const char *argv[])
 
     connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
-    write(sockfd, str, strlen(str) + 1);
+    while (fgets(buf, MAXLINE, stdin) != NULL)
+    {
+        write(sockfd, buf, strlen(buf) + 1);
 
-    n = read(sockfd, buf, MAXLINE);
-    printf("Response from server:\n");
-    write(STDOUT_FILENO, buf, n);
+        n = read(sockfd, buf, MAXLINE);
+        if (n == 0)
+        {
+            printf("The other side has been closed.\n");
+        }
+        else 
+        {
+            write(STDOUT_FILENO, buf, n);
+        }
+    }
     
     close(sockfd);
     printf("\n");
