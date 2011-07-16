@@ -19,6 +19,7 @@ int main(int argc, const char *argv[])
     char buf[MAXLINE];
     char str[INET_ADDRSTRLEN];
     int n, i;
+    pid_t pid;
 
     listenfd = my_socket(AF_INET, SOCK_STREAM, 0);
 
@@ -38,24 +39,40 @@ int main(int argc, const char *argv[])
         cliaddr_len = sizeof(cliaddr);
         connfd = my_accept(listenfd, (struct sockaddr *)&cliaddr, &cliaddr_len);
 
-        while (1) 
+        pid = fork();
+        if (pid == -1) 
         {
-            n = my_read(connfd, buf, MAXLINE);
-            if (n == 0)
+            perror("call to fork");
+            exit(1);
+        }
+        else if (pid == 0) 
+        {
+            my_close(listenfd);
+            while (1) 
             {
-                printf("The other side has been closed.\n");
-                break;
-            }
-            printf("Received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
+                n = my_read(connfd, buf, MAXLINE);
+                if (n == 0)
+                {
+                    printf("The other side has been closed.\n");
+                    break;
+                }
+                printf("Received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
 
-            for (i = 0; i < n; i++) 
-            {
-                buf[i] = toupper(buf[i]);
+                for (i = 0; i < n; i++) 
+                {
+                    buf[i] = toupper(buf[i]);
+                }
+                my_write(connfd, buf, n);
             }
-            my_write(connfd, buf, n);
+            close(connfd);
+            exit(0);
+        }
+        else 
+        {
+            my_close(connfd);
         }
 
-        my_close(connfd);
+
     }
 
     return 0;
