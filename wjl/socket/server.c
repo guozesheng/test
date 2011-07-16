@@ -37,14 +37,22 @@ int main(int argc, const char *argv[])
         cliaddr_len = sizeof(cliaddr);
         connfd = accept(listenfd, (struct sockaddr *)&cliaddr, &cliaddr_len);
 
-        n = read(connfd, buf, MAXLINE);
-        printf("Received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
-
-        for (i = 0; i < n; i++) 
+        while (1) 
         {
-            buf[i] = toupper(buf[i]);
+            n = read(connfd, buf, MAXLINE);
+            if (n == 0)
+            {
+                printf("The other side has been closed.\n");
+                break;
+            }
+            printf("Received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
+
+            for (i = 0; i < n; i++) 
+            {
+                buf[i] = toupper(buf[i]);
+            }
+            write(connfd, buf, n);
         }
-        write(connfd, buf, n);
 
         close(connfd);
     }
