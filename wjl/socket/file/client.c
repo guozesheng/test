@@ -11,18 +11,18 @@
 #include <fcntl.h>
 #include "wrap.h"
 
-#define MAXLINE 4
+#define MAXLINE 4096
 #define SERV_PORT 8000
 
 int main(int argc, const char *argv[])
 {
-    //char *str;
+    char *str;
     int sockfd, n;
     struct sockaddr_in servaddr;
     char buf[MAXLINE];
     int filefd;
 
-#if 0
+#if 1
     if (argc != 2) 
     {
         fputs("usage: ./client message\n", stderr);
@@ -40,10 +40,12 @@ int main(int argc, const char *argv[])
 
     my_connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr));
 
-    filefd = open("a.tt", O_RDONLY);
+    filefd = open(str, O_RDONLY);
+    my_write(sockfd, str, strlen(str)+1);
     while ((n = my_read(filefd, buf, MAXLINE))) 
     {
-        my_write(sockfd, buf, strlen(buf) - 1);
+        //my_write(sockfd, buf, strlen(buf) - 1);
+        my_write(sockfd, buf, n);
     }
 
 #if 0

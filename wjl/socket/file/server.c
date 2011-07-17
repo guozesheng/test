@@ -8,6 +8,7 @@
 #include <arpa/inet.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
 #include "wrap.h"
 
 #define MAXLINE 4096
@@ -51,7 +52,11 @@ int main(int argc, const char *argv[])
         else if (pid == 0) 
         {
             my_close(listenfd);
-            filefd = open("newfile", O_RDWR | O_CREAT | O_TRUNC, 0666);
+            //n = my_read(connfd, buf, MAXLINE);
+            n = my_read(connfd, buf, 4096);
+            filefd = open(buf, O_RDWR | O_CREAT | O_TRUNC, 0666);
+            //my_write(filefd, &buf[strlen(buf)+1], MAXLINE-strlen(buf)-1);
+            my_write(filefd, &buf[strlen(buf)+1], 4096-(strlen(buf)+1));
             while ((n = my_read(connfd, buf, MAXLINE))) 
             {
                 //n = my_read(connfd, buf, MAXLINE);
