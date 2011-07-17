@@ -54,7 +54,7 @@ int main(int argc, const char *argv[])
             my_close(listenfd);
             n = my_read(connfd, buf, MAXLINE);
             filefd = open(buf, O_RDWR | O_CREAT | O_TRUNC, 0666);
-            my_write(filefd, &buf[strlen(buf)+1], MAXLINE-(strlen(buf)+1));
+            my_write(filefd, &buf[strlen(buf)+1], strlen(&buf[strlen(buf)+1]));
             while ((n = my_read(connfd, buf, MAXLINE))) 
             {
                 printf("Received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
