@@ -52,19 +52,11 @@ int main(int argc, const char *argv[])
         else if (pid == 0) 
         {
             my_close(listenfd);
-            //n = my_read(connfd, buf, MAXLINE);
-            n = my_read(connfd, buf, 4096);
+            n = my_read(connfd, buf, MAXLINE);
             filefd = open(buf, O_RDWR | O_CREAT | O_TRUNC, 0666);
-            //my_write(filefd, &buf[strlen(buf)+1], MAXLINE-strlen(buf)-1);
-            my_write(filefd, &buf[strlen(buf)+1], 4096-(strlen(buf)+1));
+            my_write(filefd, &buf[strlen(buf)+1], MAXLINE-(strlen(buf)+1));
             while ((n = my_read(connfd, buf, MAXLINE))) 
             {
-                //n = my_read(connfd, buf, MAXLINE);
-                //if (n == 0)
-                //{
-                    //printf("The other side has been closed.\n");
-                    //break;
-                //}
                 printf("Received from %s at PORT %d\n", inet_ntop(AF_INET, &cliaddr.sin_addr, str, sizeof(str)), ntohs(cliaddr.sin_port));
 
                 if (filefd < 0) 
