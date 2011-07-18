@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <sqlite3.h>
 #include <stdlib.h>
+#include <string.h>
 
 int rscallback_table(void *p, int argc, char **argv, char **argvv);
 
@@ -27,7 +28,17 @@ int main(int argc, const char *argv[])
         i_row = 0;
         printf("mydms>");
         fgets(sql, 4096, stdin);
-        sqlite3_exec(db, sql, rscallback_table, &empty, &errmsg);
+        if (sql[0] == '.') 
+        {
+            if (strcmp(sql, ".exit")) 
+            {
+                flag = 0;
+            }
+        }
+        else 
+        {
+            sqlite3_exec(db, sql, rscallback_table, &empty, &errmsg);
+        }
     }
 
     
