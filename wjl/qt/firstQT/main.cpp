@@ -1,6 +1,13 @@
 #include <QApplication>
 #include <QPushButton>
 
+class MyWidget : public QWidget
+{
+public:
+    MyWidget( QWidget *parent=0, const char *name=0 );
+};
+
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
