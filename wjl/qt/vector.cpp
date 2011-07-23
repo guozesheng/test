@@ -6,17 +6,23 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    int i;
+    //int i;
 
     QVector<QString> vector(0);
+    QVector<QString>::iterator i;
 
     vector.append("one");
     vector.append("two");
     vector.append("three");
 
-    for (i = 0; i < vector.count(); i++) 
+    //for (i = 0; i < vector.count(); i++) 
+    //{
+        //qDebug()<<vector[i]<<endl;
+    //}
+
+    for (i = vector.begin(); i != vector.end(); i++) 
     {
-        qDebug()<<vector[i]<<endl;
+        qDebuf()<<*i<<endl;
     }
 
     return a.exec();
