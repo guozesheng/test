@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
     int i;
 
-    QVector(QString> vector(0));
+    QVector<QString> vector(0);
 
     vector.append("one");
     vector.append("two");
