@@ -18,6 +18,7 @@ int my_ls(const char *path)
 {
     DIR *mydir;
     struct dirent *myreaddir;
+    int i = 1;
 
     if ((mydir = opendir(path)) == NULL) 
     {
@@ -27,7 +28,7 @@ int my_ls(const char *path)
 
     while ((myreaddir = readdir(mydir)) != NULL) 
     {
-        printf("%s: %c\n", myreaddir->d_name, myreaddir->d_type);
+        printf("%s%c", myreaddir->d_name, i++ % 5 ? '\t' : '\n');
     }
     
     closedir(mydir);
