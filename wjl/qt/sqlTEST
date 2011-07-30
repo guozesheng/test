@@ -1,0 +1,31 @@
+#include <QtCore/QCoreApplication>
+#include <QtSql>
+
+int main(int argc, char *argv[])
+{
+    QCoreApplication a(argc, argv);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("memory");   //test
+    if (!db.open())
+    {
+        return false;
+    }
+
+    QSqlQuery query;
+    query.exec("CREATE TABLE student(id int primarykey, name varchar(30))");
+    query.exec("INSERT INTO student VALUES(1, 'xiaoguo')");
+    query.exec("INSERT INTO student VALUES(2, 'guozesheng')");
+    query.exec("INSERT INTO student VALUES(3, 'ccu')");
+
+    query.exec("SELECT * FROM student WHERE id > 1");
+
+    while (query.next())
+    {
+        int ele0 = query.value(0).toInt();
+        QString ele1 = query.value(1).toString();
+        qDebug()<<ele0<<ele1;
+    }
+
+    return a.exec();
+}
