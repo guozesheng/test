@@ -11,6 +11,7 @@ typedef struct stu
 NODE_stu *queue_insert(NODE_stu *head);
 int queue_print(NODE_stu *head);
 NODE_stu *qinput(NODE_stu *p);
+NODE_stu *queue_delete(NODE_stu *head, NODE_stu *qnode);
 
 int main(int argc, const char *argv[])
 {
@@ -18,7 +19,11 @@ int main(int argc, const char *argv[])
 
     head = queue_insert(head);
     head = queue_insert(head);
+    head = queue_insert(head);
 
+    queue_print(head);
+    head = queue_delete(head, head->next);
+    printf("\n");
     queue_print(head);
     
     return 0;
@@ -43,6 +48,30 @@ NODE_stu *queue_insert(NODE_stu *head)
     }
 
     p->next = qinput(ptr);
+    
+    return head;
+}
+
+NODE_stu *queue_delete(NODE_stu *head, NODE_stu *qnode)
+{
+    NODE_stu *p = head;
+
+    if (p == NULL) 
+    {
+        return NULL;
+    }
+    else if (p == qnode) 
+    {
+        free(qnode);
+        return NULL;
+    }
+
+    while (p->next != qnode && p != NULL) 
+    {
+        p = p->next;
+    }
+    p->next = qnode->next;
+    free(qnode);
     
     return head;
 }
