@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>Canvas tutorial</title>
+    <script type="text/javascript">
+        var time = new Date();
+        var s = time.getSeconds();
+        var len = 250;
+        var cirR = 200;
+        function draw()
+        {
+            var c = document.getElementById("tutorial");
+            var ctx = c.getContext("2d");
+            //ctx.fillStyle = "#eee";
+            ctx.fillStyle = "#FF0000";
+            ctx.globalAlpha = 0.8;
+            //ctx.fillRect(0, 0, c.width, c.height);
+
+            ctx.beginPath();
+            ctx.arc(len, len, 4, 8, true);
+            ctx.fill();
+            ctx.closePath();
+
+            var grd = ctx.createLinearGradient(len, len, 50, 350);
+            grd.addColorStop(0, "FF0000");
+            grd.addColorStop(0.5, "#00FF00");
+            grd.addColorStop(1, "#0000FF");
+            ctx.fillStyle = grd;
+            ctx.font = "20pt Arial";
+            ctx.fillText("CCU", len - 30, len / 2 + cirR / 4);
+            ctx.save();
+
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            radius = 6;
+            for (var i = 0; i < 7; i++)
+            {
+                ctx.arc(len + Math.sin(i * Math.PI / 6) * cirR, len - Math.cos(i *
+                Math.PI / 6) * cirR, radius, 10, true);
+            }
+            for (var i = 1; i < 6; i++)
+            {
+                ctx.arc(len - Math.sin(i * Math.PI / 6) * cirR, len - Math.cos(i *
+                Math.PI / 6) * cirR, radius, 10, true);
+            }
+            ctx.fill();
+
+            ctx.restore();
+        }
+    </script>
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+  </head>
+  <body onload="draw();">
+    <canvas id="tutorial" width="500" height="500"></canvas>
+  </body>
+</html>

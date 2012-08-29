@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>My Timer</title>
+    <script type="text/javascript">
+        var time = new Date();
+        var s = time.getSeconds();
+        var len = 250;
+        var cirR = 200;
+        function draw()
+        {
+            var c = document.getElementById("tutorial");
+            var ctx = c.getContext("2d");
+
+            ctx.fillStyle = "#FFFFFF";
+            ctx.beginPath();
+            ctx.arc(len, len, len, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = "#000000";
+            ctx.beginPath();
+            var lenR = len - len / 10;
+            ctx.arc(len, len, lenR, 0, Math.PI * 2, true);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = "#FF0000";
+            ctx.beginPath();
+            radius = 6; // What's this?
+            ctx.arc(len, len, 100, 0, Math.PI * 2, true);
+            ctx.fill();
+            var pointR = cirR + (len - cirR) / 2
+            for (var i = 0; i < 7; i++)
+            {
+                ctx.arc(len + Math.sin(i * Math.PI / 6) * pointR, len - Math.cos(i * Math.Pi / 6) * pointR, radius, 10, true);
+            }
+            for (var i = 0; i < 6; i++)
+            {
+                ctx.arc(len - Math.sin(i * Math.PI / 6) * pointR, len - Math.cos(i * Math.Pi / 6) * pointR, radius, 10, true);
+            }
+            ctx.fill();
+        }
+    </script>
+    <style type="text/css">
+      canvas { border: 0px solid white; }
+      body {background-color: #000000}
+    </style>
+  </head>
+  <body onload="draw();">
+    <center>
+        <p><br /></p>
+        <canvas id="tutorial" width="500" height="500"></canvas>
+    </center>
+  </body>
+</html>
