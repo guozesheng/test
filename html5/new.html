@@ -41,6 +41,10 @@
             ctx.arc(len, len, pointR, 0, Math.PI * 2, true);
             ctx.closePath();
             ctx.fill();
+
+            ctx.fillStyle = "#FF0000";
+            ctx.fillRect(len - pointR / 4, (len - arcR) + len / 2 - pointR, pointR / 2, len / 2);
+            //ctx.fillRect(len, 10, pointR, len);
         }
     </script>
     <style type="text/css">
